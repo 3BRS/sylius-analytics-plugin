@@ -1,0 +1,5 @@
+sylius_shop:
+    resource: "routes/sylius_shop.yaml"
+
+threebrs_analytics_plugin:
+    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/shop_routing.yaml"
