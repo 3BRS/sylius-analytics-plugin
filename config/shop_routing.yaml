@@ -1,0 +1,5 @@
+# Delete these routes and define your own shop routes here
+threebrs_analytics_plugin_ping:
+    path: /analytics/ping
+    controller: ThreeBRS\SyliusAnalyticsPlugin\Controller\PingController
+
