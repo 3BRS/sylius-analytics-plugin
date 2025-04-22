@@ -5,26 +5,36 @@ declare(strict_types=1);
 namespace ThreeBRS\SyliusAnalyticsPlugin\MessageHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\VisitLog;
+use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
 #[AsMessageHandler]
 final class LogVisitMessageHandler
 {
-    public function __construct(private EntityManagerInterface $entityManager) {}
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private ChannelRepositoryInterface $channelRepository,
+    ) {}
 
     public function __invoke(LogVisitMessage $message): void
     {
-        $log = new VisitLog();
+        $channel = $this->channelRepository->findOneByCode($message->channel);
+
+        if (!$channel) {
+            throw new \RuntimeException(sprintf('Channel with code "%s" not found.', $message->channel));
+        }
+
+        $log = new RequestLog();
         $log->setUrl($message->url);
-        $log->setRoute($message->route);
-        $log->setChannel($message->channel);
+        $log->setRouteName($message->route);
+        $log->setChannel($channel); 
         $log->setCustomer($message->customer);
         $log->setSessionId($message->sessionId);
-        $log->setIp($message->ip);
+        $log->setIpAddress($message->ip);
         $log->setUserAgent($message->userAgent);
-        $log->setVisitedAt($message->timestamp);
+        $log->setCreatedAt($message->timestamp);
 
         $this->entityManager->persist($log);
         $this->entityManager->flush();

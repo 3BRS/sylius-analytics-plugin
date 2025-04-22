@@ -10,8 +10,8 @@
         <service id="ThreeBRS\SyliusAnalyticsPlugin\MessageHandler\LogVisitMessageHandler"
                  autowire="true" autoconfigure="true" />
 
-        <!-- Request Logger (Event Subscriber) -->
-        <service id="ThreeBRS\SyliusAnalyticsPlugin\EventListener\VisitLoggerSubscriber"
+        <!-- Request Logger -->
+        <service id="ThreeBRS\SyliusAnalyticsPlugin\EventListener\RequestLoggerSubscriber"
                  autowire="true" autoconfigure="true">
             <tag name="kernel.event_subscriber" />
         </service>
