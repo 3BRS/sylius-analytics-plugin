@@ -1,0 +1,7 @@
+sylius_resource:
+    resources:
+        threebrs.statistics_plugin.request_log:
+            classes:
+                model: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
+                interface: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface
+                repository: ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository

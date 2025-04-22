@@ -10,7 +10,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\VisitLog;
+use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 
 
 final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExtension implements PrependExtensionInterface
@@ -20,12 +20,12 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
     public function load(array $configs, ContainerBuilder $container): void
     {
         $this->registerResources(
-            'sylius_analytics',     
+            'threebrs.statistics_plugin',     
             'doctrine/orm',           
             [
-                'visit_log' => [
+                'request_log' => [
                     'classes' => [
-                        'model' => VisitLog::class,
+                        'model' => RequestLog::class,
                     ],
                 ],
             ],                     

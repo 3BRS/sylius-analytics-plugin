@@ -12,18 +12,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
-use Psr\Log\LoggerInterface;
 
 
 
-final class VisitLoggerSubscriber implements EventSubscriberInterface
+final class RequestLoggerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private MessageBusInterface $bus,
         private ChannelContextInterface $channelContext,
         private CustomerContextInterface $customerContext,
         private RequestStack $requestStack,
-        private LoggerInterface $logger, // ✅ Add logger
 
     ) {}
 
@@ -34,7 +32,6 @@ final class VisitLoggerSubscriber implements EventSubscriberInterface
 
     public function onRequest(RequestEvent $event): void
     {
-        $this->logger->info('✅ VisitLoggerSubscriber triggered');
 
         $request = $event->getRequest();
 
@@ -42,7 +39,6 @@ final class VisitLoggerSubscriber implements EventSubscriberInterface
         if (str_starts_with($request->getPathInfo(), '/admin') || !$event->isMainRequest()) {
             return;
         }
-        $this->logger->info('📦 Dispatching LogVisitMessage for route: '.$request->attributes->get('_route'));
 
 
         $this->bus->dispatch(new LogVisitMessage(
