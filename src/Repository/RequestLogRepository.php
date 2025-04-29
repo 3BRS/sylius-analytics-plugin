@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ThreeBRS\SyliusAnalyticsPlugin\Repository;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface;
 
 class RequestLogRepository extends EntityRepository implements RequestLogRepositoryInterface
 {

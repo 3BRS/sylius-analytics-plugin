@@ -8,10 +8,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Resource\Metadata\AsResource;
+
+
+
 
 #[ORM\Entity]
 #[ORM\Table(name: 'threebrs_request_log')]
-class RequestLog implements RequestLogInterface, ResourceInterface
+
+/* #[AsResource(
+    alias: 'threebrs.statistics_plugin.request_log',
+    section: 'admin',
+    grid: 'threebrs_statistics_plugin_request_log'
+)]
+
+#[AsResource(
+    alias: 'threebrs.statistics_plugin.request_log',
+)]
+ */
+
+ class RequestLog implements RequestLogInterface, ResourceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

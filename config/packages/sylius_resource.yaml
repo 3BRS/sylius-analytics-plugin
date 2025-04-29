@@ -1,6 +1,7 @@
 sylius_resource:
     resources:
         threebrs.statistics_plugin.request_log:
+            driver: doctrine/orm
             classes:
                 model: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
                 interface: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface
