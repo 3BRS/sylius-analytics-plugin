@@ -3,3 +3,7 @@ sylius_shop:
 
 threebrs_analytics_plugin:
     resource: "@ThreeBRSSyliusAnalyticsPlugin/config/shop_routing.yaml"
+
+threebrs_statistics_plugin_request_log_admin:
+    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin/threebrs_statistics_plugin_request_log.yaml"
+    prefix: /admin

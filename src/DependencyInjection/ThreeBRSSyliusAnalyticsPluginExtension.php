@@ -10,7 +10,13 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
+use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface;
+use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Bundle\GridBundle\DependencyInjection\Compiler\RegisterGridsPass;
+use Sylius\Bundle\GridBundle\SyliusGridBundle;
 
 
 final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExtension implements PrependExtensionInterface
@@ -19,24 +25,37 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $this->registerResources(
-            'threebrs.statistics_plugin',     
-            'doctrine/orm',           
+        /* $this->registerResources(
+            'threebrs.statistics_plugin',    
+            'doctrine/orm',                    
             [
                 'request_log' => [
                     'classes' => [
                         'model' => RequestLog::class,
+                        'interface' => RequestLogInterface::class,
+                        'repository' => RequestLogRepository::class,
+                        'controller' => ResourceController::class, 
+
+
                     ],
                 ],
-            ],                     
-            $container                
-        );
-        
-        
+            ],
+            $container
+        ); */
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.xml');
-    }
+
+        $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+        $yamlLoader->load('sylius_resource.yaml');
+
+        
+        $container->setParameter('sylius_grid.grids_paths', [
+            realpath(__DIR__.'/../../config/grid/admin') => '/admin',
+        ]);
+
     
+    }
 
     public function prepend(ContainerBuilder $container): void
     {

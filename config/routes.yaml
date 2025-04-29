@@ -3,3 +3,18 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+threebrs_admin_request_log:
+    resource: |
+        alias: threebrs.statistics_plugin.request_log
+        section: admin
+        templates: "@SyliusAdmin/Crud"
+        redirect: index
+        grid: threebrs_admin_request_log
+        vars:
+            all:
+                subheader: 'Request Logs'
+            index:
+                icon: 'list'
+    type: sylius.resource
+    prefix: /admin
