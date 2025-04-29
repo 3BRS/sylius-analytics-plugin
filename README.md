@@ -38,72 +38,20 @@ Sylius Analytics Plugin
 
 ## Installation
 
-1. Require the plugin via Composer:
-```bash
-composer require 3brs/sylius-analytics-plugin
+1. Run `composer require 3brs/sylius-analytics-plugin`.
+2. Register `ThreeBRS\SyliusShipmentExportPlugin\ThreeBRSSyliusShipmentExportPlugin::class => ['all' => true]` in your `config/bundles.php`.
+3. Import `@ThreeBRSSyliusAnalyticsPlugin/Resources/config/routing.yml` in your `config/routes.yaml`
 
 
-If using locally (path repository), add this to your composer.json:
-
-{
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../path-to/3brs/sylius-analytics-plugin"
-    }
-  ]
-}
-
-Then run:
-
-composer update 3brs/sylius-analytics-plugin
-
-
-Register the plugin in config/bundles.php:
-
-ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],
-
-
+```
 Import the routing inside config/routes.yaml:
 
 threebrs_sylius_analytics_plugin_admin:
     resource: "@ThreeBRSSyliusAnalyticsPlugin/config/admin_routing.yaml"
     prefix: /admin
-
-threebrs_sylius_analytics_plugin_shop:
-    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/shop_routing.yaml"
-    prefix: /
+```
 
 
-Configure Sylius Resource in config/packages/sylius_resource.yaml:
-
-sylius_resource:
-    resources:
-        threebrs.statistics_plugin.request_log:
-            classes:
-                model: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
-                interface: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface
-                repository: ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository
-
-Configure Doctrine mapping (if needed):
-
-doctrine:
-    orm:
-        mappings:
-            ThreeBRSSyliusAnalyticsPlugin:
-                type: attribute
-                dir: '%kernel.project_dir%/vendor/3brs/sylius-analytics-plugin/src/Entity'
-                prefix: 'ThreeBRS\SyliusAnalyticsPlugin\Entity'
-                is_bundle: false
-
-Configure Symfony Messenger routing in config/packages/messenger.yaml:
-
-framework:
-    messenger:
-        transports:
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-        routing:
-            'ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage': async
 
 Usage
 The plugin will automatically log visits on:
@@ -121,39 +69,29 @@ Other shop pages
 You can view the statistics inside the admin panel under the Analytics section.
 Visit logs are processed asynchronously using Symfony Messenger.
 
-Development
-Setup
-Develop your plugin code inside /src
-
-Useful commands are available inside /bin
-
-Testing
-After making changes, ensure that tests pass:
 
 
-composer install
-bin/phpstan.sh
-bin/ecs.sh
-vendor/bin/behat
-Testing Application Setup
-Inside tests/Application/:
+## Development
 
+### Usage
 
-composer install
-bin/console doctrine:database:create --env=test
-bin/console doctrine:migrations:migrate --env=test
-yarn install
-yarn build
-symfony serve -d
-vendor/bin/behat
+- Develop your plugin in `/src`
+- See `bin/` for useful commands
+
+### Testing
+
+After your changes you must ensure that the tests are still passing.
+
+```bash
+$ composer install
+$ bin/phpstan.sh
+$ bin/ecs.sh
+```
+
 License
+-------
 This library is under the MIT license.
 
 Credits
-Developed by 3BRS
-
-
-
-
-
-
+-------
+Developed by [3BRS](https://3brs.com)<br>
