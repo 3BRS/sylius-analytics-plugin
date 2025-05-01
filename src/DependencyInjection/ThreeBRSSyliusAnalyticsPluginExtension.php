@@ -43,16 +43,15 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
             $container
         ); */
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $loader->load('services.xml');
+
 
         $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $yamlLoader->load('sylius_resource.yaml');
-
+        $yamlLoader->load('services.yaml');
+ 
         
-        $container->setParameter('sylius_grid.grids_paths', [
-            realpath(__DIR__.'/../../config/grid/admin') => '/admin',
-        ]);
+        /* $container->setParameter('sylius_grid.grids_paths', [
+            realpath(__DIR__.'/../../config/packages') => '/admin',
+        ]); */
 
     
     }
