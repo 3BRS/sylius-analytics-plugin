@@ -27,7 +27,7 @@ use Sylius\Resource\Metadata\AsResource;
 )]
  */
 
- class RequestLog implements RequestLogInterface, ResourceInterface
+ class RequestLog implements ResourceInterface, RequestLogInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

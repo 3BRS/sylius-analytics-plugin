@@ -1,34 +1,34 @@
 sylius_grid:
-    grids:
-        threebrs_admin_request_log:
-            driver:
-                name: doctrine/orm
-                options:
-                    class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
-            fields:
-                id:
-                    type: string
-                    label: ID
-                url:
-                    type: string
-                    label: URL
-                route:
-                    type: string
-                    label: Route
-                customer:
-                    type: twig
-                    label: Customer
-                    options:
-                        template: '@SyliusAdmin/Grid/Field/customer.html.twig' #test till updated
-                visitedAt:
-                    type: datetime
-                    label: Visit Time
-            actions:
-                main:
-                    create:
-                        type: create
-                        disabled: true
-                item:
-                    delete:
-                        type: delete
-                        disabled: true 
+  grids:
+    threebrs_statistics_plugin_request_log:
+      driver:
+        name: doctrine/orm
+        options:
+          class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
+      fields:
+        id:
+          type: string
+          label: ID
+        url:
+          type: string
+          label: URL
+        routeName:
+          type: string
+          label: Route
+        #customer:
+          #type: twig
+          #label: Customer
+          #options:
+            #template: '@SyliusAdmin/Grid/Field/customer.html.twig'
+        createdAt:
+          type: datetime
+          label: Visit Time
+      actions:
+        main:
+          create:
+            type: create
+            enabled: false     
+        item:
+          delete:
+            type: delete
+            enabled: false      
