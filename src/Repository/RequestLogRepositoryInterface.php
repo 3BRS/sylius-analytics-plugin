@@ -17,5 +17,5 @@ interface RequestLogRepositoryInterface extends RepositoryInterface
     /**
      * @param string $routeName
      */
-    public function countVisitsByRoute(string $routeName): int;
+    public function countShopProductRequests(string $productSlug): int;
 }

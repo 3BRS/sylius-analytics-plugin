@@ -5,30 +5,70 @@ sylius_grid:
         name: doctrine/orm
         options:
           class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
+
       fields:
-        id:
-          type: string
-          label: ID
+        #id:
+          #type: string
+          #label: ID
+
         url:
           type: string
           label: URL
+
         routeName:
           type: string
-          label: Route
-        #customer:
-          #type: twig
-          #label: Customer
-          #options:
-            #template: '@SyliusAdmin/Grid/Field/customer.html.twig'
+          label: Route Name
+
+        channel:
+          type: string
+          label: Channel
+          path: channel.code
+
+        customer:
+          type: twig
+          label: Customer
+          sortable: false
+          options:
+            template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/customer_email.html.twig'
+
+        sessionId:
+          type: string
+          label: Session ID
+
+        ipAddress:
+          type: string
+          label: IP Address
+
+        userAgent:
+          type: string
+          label: User Agent
+          sortable: false
+
         createdAt:
           type: datetime
           label: Visit Time
-      actions:
-        main:
-          create:
-            type: create
-            enabled: false     
-        item:
-          delete:
-            type: delete
-            enabled: false      
+
+      filters:
+        channel:
+          type: string
+          label: Channel Code
+          options:
+            fields: [channel.code]
+
+        routeName:
+          type: string
+          label: Route Name
+
+        createdAt:
+          type: date
+          label: Visit Date
+
+    sylius_admin_product:
+      fields:
+        requestCount:
+          type: twig
+          label: 'Requests'
+          path: id
+          sortable: false
+          options:
+            template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/request_count.html.twig'

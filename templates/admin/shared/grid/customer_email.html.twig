@@ -1,0 +1,5 @@
+{% if data is not null and data.customer is not null %}
+    {{ data.customer.email }}
+{% else %}
+    <span>{{ 'threebrs.ui.statistics_plugin.anonymous'|trans }}</span>
+{% endif %}

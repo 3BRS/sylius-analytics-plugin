@@ -4,10 +4,37 @@ services:
     autoconfigure: true
     public: false
 
+#"Whenever something (like a controller) asks for RequestLogRepositoryInterface, give it the service with ID threebrs.repository.statistics_plugin.request_log."
+  ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface: '@threebrs.repository.statistics_plugin.request_log'
+
+
   # Messenger handler
   ThreeBRS\SyliusAnalyticsPlugin\MessageHandler\LogVisitMessageHandler: ~
 
   # Event subscriber
   ThreeBRS\SyliusAnalyticsPlugin\EventListener\RequestLoggerSubscriber:
+    arguments:
+        $adminPath: '%sylius_admin.path_name%'
     tags:
       - { name: kernel.event_subscriber }
+
+  # Menu Listener subscriber
+  ThreeBRS\SyliusAnalyticsPlugin\Menu\AdminMenuListener:
+        arguments:
+            $translator: '@translator'
+        tags:
+            - { name: kernel.event_subscriber }
+
+
+  ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\RequestStatsController:
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags: ['controller.service_arguments']
+
+  ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\ProductRequestStatsController:
+    autowire: true
+    autoconfigure: true
+    public: true
+  
+ 

@@ -1,0 +1,13 @@
+threebrs:
+    ui:
+        statistics_plugin:
+            request_logs: Request Logs
+            pageTitle: Request Logs
+            most_requested_pages: Most Requested Pages
+            route_name: Route Name
+            requests: Requests
+            no_data: No data available.
+            product_request_count: Product page requests
+            anonymous: Anonymous
+            
+

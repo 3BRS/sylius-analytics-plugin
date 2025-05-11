@@ -22,12 +22,14 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
         return $qb->getQuery()->getResult();
     }
 
-    public function countVisitsByRoute(string $routeName): int
+    public function countShopProductRequests(string $productSlug): int
     {
         return (int) $this->createQueryBuilder('r')
             ->select('COUNT(r.id)')
-            ->where('r.routeName = :routeName')
-            ->setParameter('routeName', $routeName)
+            ->where('r.routeName = :route')
+            ->andWhere('r.url LIKE :slug')
+            ->setParameter('route', 'sylius_shop_product_show')
+            ->setParameter('slug', '%/' . $productSlug)
             ->getQuery()
             ->getSingleScalarResult();
     }
