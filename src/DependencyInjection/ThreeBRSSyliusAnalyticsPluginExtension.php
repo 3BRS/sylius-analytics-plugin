@@ -25,33 +25,13 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        /* $this->registerResources(
-            'threebrs.statistics_plugin',    
-            'doctrine/orm',                    
-            [
-                'request_log' => [
-                    'classes' => [
-                        'model' => RequestLog::class,
-                        'interface' => RequestLogInterface::class,
-                        'repository' => RequestLogRepository::class,
-                        'controller' => ResourceController::class, 
 
+        $container->setParameter('threebrs.test_flag', 'hello_from_plugin');
 
-                    ],
-                ],
-            ],
-            $container
-        ); */
-
-
-
+        
         $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $yamlLoader->load('services.yaml');
- 
-        
-        /* $container->setParameter('sylius_grid.grids_paths', [
-            realpath(__DIR__.'/../../config/packages') => '/admin',
-        ]); */
+
 
     
     }

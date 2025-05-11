@@ -8,25 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Resource\Metadata\AsResource;
-
 
 
 
 #[ORM\Entity]
 #[ORM\Table(name: 'threebrs_request_log')]
-
-/* #[AsResource(
-    alias: 'threebrs.statistics_plugin.request_log',
-    section: 'admin',
-    grid: 'threebrs_statistics_plugin_request_log'
-)]
-
-#[AsResource(
-    alias: 'threebrs.statistics_plugin.request_log',
-)]
- */
-
  class RequestLog implements ResourceInterface, RequestLogInterface
 {
     #[ORM\Id]
@@ -60,10 +46,6 @@ use Sylius\Resource\Metadata\AsResource;
     #[ORM\Column(name: 'created_at', type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
 
     public function getId(): ?int
     {

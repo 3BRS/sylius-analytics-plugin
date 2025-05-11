@@ -27,7 +27,7 @@ final class Version20250422123214 extends AbstractMigration
                 session_id VARCHAR(255) DEFAULT NULL,
                 ip_address VARCHAR(45) DEFAULT NULL,
                 user_agent TEXT DEFAULT NULL,
-                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                created_at TIMESTAMP NOT NULL,
                 PRIMARY KEY(id)
             )
         SQL);
@@ -45,7 +45,6 @@ final class Version20250422123214 extends AbstractMigration
             ALTER TABLE threebrs_request_log
             ADD CONSTRAINT FK_65C2764572F5A1AA FOREIGN KEY (channel_id)
             REFERENCES sylius_channel (id)
-            NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
 
         // Foreign key to sylius_customer (nullable, ON DELETE SET NULL)
@@ -54,7 +53,6 @@ final class Version20250422123214 extends AbstractMigration
             ADD CONSTRAINT FK_65C276459395C3F3 FOREIGN KEY (customer_id)
             REFERENCES sylius_customer (id)
             ON DELETE SET NULL
-            NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
     }
 
@@ -62,10 +60,10 @@ final class Version20250422123214 extends AbstractMigration
     {
         // Drop foreign keys first
         $this->addSql(<<<'SQL'
-            ALTER TABLE threebrs_request_log DROP CONSTRAINT FK_65C2764572F5A1AA
+            ALTER TABLE threebrs_request_log DROP FOREIGN KEY FK_65C2764572F5A1AA
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE threebrs_request_log DROP CONSTRAINT FK_65C276459395C3F3
+            ALTER TABLE threebrs_request_log DROP FOREIGN KEY FK_65C276459395C3F3
         SQL);
 
         // Then drop the table

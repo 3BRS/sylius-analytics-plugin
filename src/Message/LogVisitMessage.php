@@ -14,6 +14,5 @@ final class LogVisitMessage
         public ?string $sessionId,
         public ?string $ip,
         public ?string $userAgent,
-        public \DateTimeImmutable $timestamp,
     ) {}
 }

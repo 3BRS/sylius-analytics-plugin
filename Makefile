@@ -28,10 +28,12 @@ recreate_db:
 	APP_ENV=test tests/Application/bin/console doctrine:migration:sync-metadata-storage
 
 var:
-	rm -fr tests/Application/var && mkdir -p tests/Application/var/log
+	rm -fr tests/Application/var
+	mkdir -p tests/Application/var/cache
+	mkdir -p tests/Application/var/log
 	touch tests/Application/var/log/test.log
 	chmod -R 777 tests/Application/var
-
+	
 cache:
 	APP_ENV=test tests/Application/bin/console cache:clear
 	chmod -R 777 tests/Application/var
