@@ -78,6 +78,7 @@ After making changes, make sure tests and checks pass:
 composer install
 bin/phpstan.sh
 bin/ecs.sh
+```
 
 
 License
