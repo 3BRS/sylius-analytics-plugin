@@ -29,10 +29,6 @@ Sylius Analytics Plugin
 * Built on top of Symfony Messenger for asynchronous processing
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/3BRS/sylius-analytics-plugin/master/docs/admin_logs_list.png"/>
-</p>
-
-<p align="center">
   <img src="https://github.com/3BRS/sylius-analytics-plugin/blob/AK/doc/admin-dashboard-request-logs.png?raw=true" />
 </p>
 
@@ -40,54 +36,49 @@ Sylius Analytics Plugin
 ## Installation
 
 1. Run `composer require 3brs/sylius-analytics-plugin`.
-2. Register `ThreeBRS\SyliusShipmentExportPlugin\ThreeBRSSyliusShipmentExportPlugin::class => ['all' => true]` in your `config/bundles.php`.
-3. Import `@ThreeBRSSyliusAnalyticsPlugin/Resources/config/routing.yml` in your `config/routes.yaml`
+2. Register `ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],` in your `config/bundles.php`.
+3. Import the plugin's routing files in `config/routes.yaml`:
+
+    ```yaml
+    threebrs_sylius_analytics_plugin_admin:
+        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/admin_routing.yaml"
+        prefix: /admin
+
+    threebrs_sylius_analytics_plugin_request_log:
+        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin/threebrs_statistics_plugin_request_log.yaml"
+        prefix: /admin
+    ```
 
 
-```
-Import the routing inside config/routes.yaml:
+## Usage
 
-threebrs_sylius_analytics_plugin_admin:
-    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/admin_routing.yaml"
-    prefix: /admin
-```
+The plugin will automatically log requests on:
 
+- Homepage
+- Product detail pages
+- Category pages
+- Cart pages
+- Other shop pages
 
-
-Usage
-The plugin will automatically log visits on:
-
-Homepage
-
-Product detail pages
-
-Category pages
-
-Cart pages
-
-Other shop pages
-
-You can view the statistics inside the admin panel under the Analytics section.
-Visit logs are processed asynchronously using Symfony Messenger.
-
-
+You can view the statistics inside the admin panel under the Analytics section.  
+All logs are processed asynchronously using Symfony Messenger.
 
 ## Development
 
 ### Usage
 
-- Develop your plugin in `/src`
-- See `bin/` for useful commands
+- Develop your plugin logic inside `/src`
+- See `bin/` for useful dev tools
 
 ### Testing
 
-After your changes you must ensure that the tests are still passing.
+After making changes, make sure tests and checks pass:
 
 ```bash
-$ composer install
-$ bin/phpstan.sh
-$ bin/ecs.sh
-```
+composer install
+bin/phpstan.sh
+bin/ecs.sh
+
 
 License
 -------
