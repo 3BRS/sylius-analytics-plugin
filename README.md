@@ -33,8 +33,9 @@ Sylius Analytics Plugin
 </p>
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/3BRS/sylius-analytics-plugin/master/docs/product_visit_count.png"/>
+  <img src="https://github.com/3BRS/sylius-analytics-plugin/blob/AK/doc/admin-dashboard-request-logs.png?raw=true" />
 </p>
+
 
 ## Installation
 
