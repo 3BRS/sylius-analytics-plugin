@@ -48,6 +48,17 @@ Sylius Analytics Plugin
         resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin/threebrs_statistics_plugin_request_log.yaml"
         prefix: /admin
     ```
+4. Define MESSENGER parameters in .env file 
+    
+    ```
+    MESSENGER_TRANSPORT_DSN=doctrine://default  
+
+    ```
+5. Background worker running required using
+
+    ```bash
+    bin/console messenger:consume async -vv
+    ```
 
 
 ## Usage
