@@ -30,9 +30,9 @@ final class LogVisitMessageHandler
             throw new \RuntimeException(sprintf('Channel with code "%s" not found.', $message->channel));
         }
 
-        $customer = null;
+        $customer = null; //3ashan law enta ma3andksh cust. obj. aslun ya3ni guest user maloosh wogood ka cusotmer obj.
         if ($message->customer !== null) {
-            $customer = $this->customerRepository->find($message->customer);
+            $customer = $this->customerRepository->find($message->customer); //law fe customer obj. hato bel id
         }
 
         $log = new RequestLog();

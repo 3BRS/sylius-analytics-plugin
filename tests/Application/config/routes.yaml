@@ -7,8 +7,9 @@ threebrs_analytics_plugin:
 threebrs_statistics_plugin_request_log_admin:
     resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin/threebrs_statistics_plugin_request_log.yaml"
     prefix: /admin
-    
+
 threebrs_statistics_plugin_custom_routes:
     resource: "@ThreeBRSSyliusAnalyticsPlugin/config/admin_routing.yaml"
     prefix: /admin
+    
 
