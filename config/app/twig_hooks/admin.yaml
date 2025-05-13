@@ -21,9 +21,9 @@ sylius_twig_hooks:
                 template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/request_log/_hook_widget.html.twig'
                 priority: 0
 
-        'sylius_admin.product.show.content.page_body.general':
-            product_request_count:
-                template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/product/show/_request_count_hook.html.twig'
-                priority: 100
+        #'sylius_admin.product.show.content.page_body.general':
+            #product_request_count:
+                #template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/product/show/_request_count_hook.html.twig'
+                #   priority: 100
 
                 

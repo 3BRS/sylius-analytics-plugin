@@ -69,6 +69,6 @@ sylius_grid:
           type: twig
           label: 'Requests'
           path: id
-          sortable: false
+          sortable: true
           options:
             template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/request_count.html.twig'
