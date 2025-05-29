@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.3",
         "sylius/sylius": "^2.0",
-        "symfony/runtime": "^6.4"
+        "symfony/runtime": "^7.3"
     },
     "require-dev": {
         "behat/behat": "^3.16",
