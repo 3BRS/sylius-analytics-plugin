@@ -8,6 +8,9 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class RequestLogRepository extends EntityRepository implements RequestLogRepositoryInterface
 {
+    /**
+     * @return array<int, array{routeName: string, visitCount: int}>
+     */
     public function findMostVisitedPagesLast7Days(int $limit = 10): array
     {
         $qb = $this->createQueryBuilder('r')
@@ -19,7 +22,10 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
             ->setMaxResults($limit)
             ->setParameter('startDate', new \DateTimeImmutable('-7 days'));
 
-        return $qb->getQuery()->getResult();
+        $result = $qb->getQuery()->getArrayResult();
+
+        /** @var array<int, array{routeName: string, visitCount: int}> $result */
+        return $result;
     }
 
     public function countShopProductRequests(string $productSlug): int

@@ -13,6 +13,9 @@ use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface;
 
 final class ProductRequestStatsController extends AbstractController
 {
+    /**
+     * @param ProductRepositoryInterface<ProductInterface> $productRepository
+     */
     public function __construct(
         private RequestLogRepositoryInterface $requestLogRepository,
         private ProductRepositoryInterface $productRepository,
@@ -29,6 +32,10 @@ final class ProductRequestStatsController extends AbstractController
         }
 
         $slug = $product->getTranslation()->getSlug();
+
+        if ($slug === null) {
+            throw new \RuntimeException('Product slug is null.');
+        }
 
         $count = $this->requestLogRepository->countShopProductRequests($slug);
 

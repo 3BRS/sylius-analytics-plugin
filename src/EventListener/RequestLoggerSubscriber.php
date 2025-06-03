@@ -8,14 +8,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\RequestStack;
+// 🔧 Removed unused RequestStack import
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Core\Exception\CustomerNotFoundException;
-
-
 
 final class RequestLoggerSubscriber implements EventSubscriberInterface
 {
@@ -23,7 +21,6 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         private MessageBusInterface $bus,
         private ChannelContextInterface $channelContext,
         private CustomerContextInterface $customerContext,
-        private RequestStack $requestStack,
         private string $adminPath
     ) {}
 
@@ -35,15 +32,13 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
     public function onRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-    
-        // Skip subrequests (e.g., fragments)
+
         if (!$event->isMainRequest()) {
             return;
         }
-    
+
         $path = $request->getPathInfo();
-    
-        // Skip admin, profiler, WDT, media
+
         if (
             str_starts_with($path, '/' . $this->adminPath) ||
             str_starts_with($path, '/_profiler') ||
@@ -52,8 +47,7 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         ) {
             return;
         }
-    
-        // Handle customer context safely
+
         $customerId = null;
         try {
             $customer = $this->customerContext->getCustomer();
@@ -63,13 +57,22 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         } catch (CustomerNotFoundException $e) {
             $customerId = null;
         }
-    
+
+        $routeAttr = $request->attributes->get('_route');
+        $route = is_string($routeAttr) ? $routeAttr : 'unknown';
+        
+        //$channel = $this->channelContext->getChannel();
+        $channelCode = $this->channelContext->getChannel()->getCode();
+
+        //$session = $request->getSession();
+        $sessionId = $request->getSession()->getId();
+
         $this->bus->dispatch(new LogVisitMessage(
             $request->getUri(),
-            $request->attributes->get('_route') ?? 'unknown',
-            $this->channelContext->getChannel()?->getCode(),
+            $route,
+            $channelCode,
             $customerId,
-            $request->getSession()?->getId(),
+            $sessionId,
             $request->getClientIp(),
             $request->headers->get('User-Agent'),
         ));
