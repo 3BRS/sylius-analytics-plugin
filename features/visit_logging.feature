@@ -6,6 +6,7 @@ Feature: Visit Logging
     And the store has a product "Awesome T-Shirt"
     And the store has a category "T-Shirts"
 
+
   Scenario: User visits homepage
     When I visit the store homepage
     Then this request should be logged
@@ -21,8 +22,5 @@ Feature: Visit Logging
   Scenario: User visits the cart page
     When I visit the cart page
     Then this request should be logged
+    
 
-  Scenario: Admin sees the logged requests
-    When I log in to the admin panel
-    And I go to the request logs page
-    Then I should see visit logs for all pages

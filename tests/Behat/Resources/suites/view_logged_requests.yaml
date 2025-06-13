@@ -1,0 +1,15 @@
+default:
+    suites:
+        view_logged_requests:
+            contexts:
+                - tests.threebrs.sylius_analytics_plugin.context.ui.admin.view_request_logs
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.customer
+                - sylius.behat.context.setup.taxonomy
+                - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.ui.admin.login
+            filters:
+                tags: "@view_logged_requests"

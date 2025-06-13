@@ -12,5 +12,12 @@
             <argument type="service" id="behat.mink.default_session"/>
             <argument type="service" id="router"/>
         </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.admin.view_request_logs"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin\ViewRequestLogsContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+        </service>
     </services>
 </container>

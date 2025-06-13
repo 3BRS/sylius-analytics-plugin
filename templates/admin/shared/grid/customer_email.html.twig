@@ -1,5 +1,7 @@
-{% if data is not null and data.customer is not null %}
-    {{ data.customer.email }}
+{% set customer = data %}
+
+{% if customer is not null %}
+	{{ customer.email }}
 {% else %}
-    <span>{{ 'threebrs.ui.statistics_plugin.anonymous'|trans }}</span>
+	<span>{{ 'threebrs.ui.statistics_plugin.anonymous'|trans }}</span>
 {% endif %}

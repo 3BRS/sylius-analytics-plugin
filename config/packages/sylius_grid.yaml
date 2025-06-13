@@ -1,74 +1,75 @@
 sylius_grid:
-  grids:
-    threebrs_statistics_plugin_request_log:
-      driver:
-        name: doctrine/orm
-        options:
-          class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
+    grids:
+        threebrs_statistics_plugin_request_log:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
 
-      fields:
-        #id:
-          #type: string
-          #label: ID
+            fields:
+                #id:
+                #type: string
+                #label: ID
 
-        url:
-          type: string
-          label: URL
+                url:
+                    type: string
+                    label: URL
 
-        routeName:
-          type: string
-          label: Route Name
+                routeName:
+                    type: string
+                    label: Route Name
 
-        channel:
-          type: string
-          label: Channel
-          path: channel.code
+                channel:
+                    type: string
+                    label: Channel
+                    path: channel.code
 
-        customer:
-          type: twig
-          label: Customer
-          sortable: false
-          options:
-            template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/customer_email.html.twig'
+                customer:
+                    type: twig
+                    label: Customer
+                    path: customer
+                    sortable: false
+                    options:
+                        template: "@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/customer_email.html.twig"
 
-        sessionId:
-          type: string
-          label: Session ID
+                sessionId:
+                    type: string
+                    label: Session ID
 
-        ipAddress:
-          type: string
-          label: IP Address
+                ipAddress:
+                    type: string
+                    label: IP Address
 
-        userAgent:
-          type: string
-          label: User Agent
-          sortable: false
+                userAgent:
+                    type: string
+                    label: User Agent
+                    sortable: false
 
-        createdAt:
-          type: datetime
-          label: Visit Time
+                createdAt:
+                    type: datetime
+                    label: Visit Time
 
-      filters:
-        channel:
-          type: string
-          label: Channel Code
-          options:
-            fields: [channel.code]
+            filters:
+                channel:
+                    type: string
+                    label: Channel Code
+                    options:
+                        fields: [channel.code]
 
-        routeName:
-          type: string
-          label: Route Name
+                routeName:
+                    type: string
+                    label: Route Name
 
-        createdAt:
-          type: date
-          label: Visit Date
+                createdAt:
+                    type: date
+                    label: Visit Date
 
-    sylius_admin_product:
-      fields:
-        requestCount:
-          type: twig
-          label: 'Requests'
-          path: id
-          sortable: true
-          options:
-            template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/request_count.html.twig'
+        sylius_admin_product:
+            fields:
+                requestCount:
+                    type: twig
+                    label: "Requests"
+                    path: id
+                    sortable: true
+                    options:
+                        template: "@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/request_count.html.twig"

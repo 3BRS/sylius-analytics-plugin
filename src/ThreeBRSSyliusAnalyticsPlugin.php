@@ -24,7 +24,7 @@ final class ThreeBRSSyliusAnalyticsPlugin extends Bundle
         parent::build($container);
     }
 
-    public function getContainerExtension(): ?ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
         return new ThreeBRSSyliusAnalyticsPluginExtension();
     }

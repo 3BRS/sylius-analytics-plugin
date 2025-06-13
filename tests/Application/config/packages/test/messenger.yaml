@@ -1,7 +1,6 @@
 framework:
     messenger:
         transports:
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-
+            async: "sync://"
         routing:
             'ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage': async

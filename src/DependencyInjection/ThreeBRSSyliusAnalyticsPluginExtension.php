@@ -9,15 +9,7 @@ use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceE
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLogInterface;
-use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Bundle\GridBundle\DependencyInjection\Compiler\RegisterGridsPass;
-use Sylius\Bundle\GridBundle\SyliusGridBundle;
-
 
 final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
@@ -25,15 +17,10 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-
         $container->setParameter('threebrs.test_flag', 'hello_from_plugin');
 
-        
         $yamlLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $yamlLoader->load('services.yaml');
-
-
-    
     }
 
     public function prepend(ContainerBuilder $container): void
@@ -51,6 +38,9 @@ final class ThreeBRSSyliusAnalyticsPluginExtension extends AbstractResourceExten
         return '@ThreeBRSSyliusAnalyticsPlugin/Migrations';
     }
 
+    /**
+     * @return array<string>
+     */
     protected function getNamespacesOfMigrationsExecutedBefore(): array
     {
         return [

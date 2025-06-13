@@ -9,11 +9,9 @@ use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-
-
 #[ORM\Entity]
 #[ORM\Table(name: 'threebrs_request_log')]
- class RequestLog implements ResourceInterface, RequestLogInterface
+class RequestLog implements ResourceInterface, RequestLogInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -45,7 +43,6 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
     #[ORM\Column(name: 'created_at', type: 'datetime')]
     private \DateTimeInterface $createdAt;
-
 
     public function getId(): ?int
     {

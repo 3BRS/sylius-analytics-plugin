@@ -10,7 +10,9 @@ use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository;
 
 final class RequestStatsController extends AbstractController
 {
-    public function __construct(private RequestLogRepository $requestLogRepository) {}
+    public function __construct(private RequestLogRepository $requestLogRepository)
+    {
+    }
 
     public function __invoke(): Response
     {

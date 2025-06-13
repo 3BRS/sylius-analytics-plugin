@@ -19,7 +19,8 @@ final class ProductRequestStatsController extends AbstractController
     public function __construct(
         private RequestLogRepositoryInterface $requestLogRepository,
         private ProductRepositoryInterface $productRepository,
-    ) {}
+    ) {
+    }
 
     #[Route('/admin/_widget/product/{id}/request-count', name: 'threebrs_admin_product_request_count', methods: ['GET'])]
     public function __invoke(int $id): Response

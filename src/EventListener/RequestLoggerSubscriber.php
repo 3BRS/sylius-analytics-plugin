@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace ThreeBRS\SyliusAnalyticsPlugin\EventListener;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
-// 🔧 Removed unused RequestStack import
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
+use Sylius\Component\Core\Exception\CustomerNotFoundException;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
-use Sylius\Component\Core\Exception\CustomerNotFoundException;
+// 🔧 Removed unused RequestStack import
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Messenger\MessageBusInterface;
+use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
 final class RequestLoggerSubscriber implements EventSubscriberInterface
 {
@@ -21,8 +21,9 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         private MessageBusInterface $bus,
         private ChannelContextInterface $channelContext,
         private CustomerContextInterface $customerContext,
-        private string $adminPath
-    ) {}
+        private string $adminPath,
+    ) {
+    }
 
     public static function getSubscribedEvents(): array
     {
@@ -47,12 +48,16 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         ) {
             return;
         }
-
+        //to satisfy PHPStan
         $customerId = null;
+
         try {
             $customer = $this->customerContext->getCustomer();
             if ($customer instanceof CustomerInterface) {
-                $customerId = $customer->getId();
+                $id = $customer->getId();
+                if (is_scalar($id) || (is_object($id) && method_exists($id, '__toString'))) {
+                    $customerId = (string) $id;
+                }
             }
         } catch (CustomerNotFoundException $e) {
             $customerId = null;
@@ -60,7 +65,7 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
 
         $routeAttr = $request->attributes->get('_route');
         $route = is_string($routeAttr) ? $routeAttr : 'unknown';
-        
+
         //$channel = $this->channelContext->getChannel();
         $channelCode = $this->channelContext->getChannel()->getCode();
 

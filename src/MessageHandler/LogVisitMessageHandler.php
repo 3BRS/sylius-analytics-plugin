@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace ThreeBRS\SyliusAnalyticsPlugin\MessageHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
-use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Symfony\Component\Clock\ClockInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
@@ -26,7 +26,8 @@ final class LogVisitMessageHandler
         private ChannelRepositoryInterface $channelRepository,
         private CustomerRepositoryInterface $customerRepository,
         private ClockInterface $clock,
-    ) {}
+    ) {
+    }
 
     public function __invoke(LogVisitMessage $message): void
     {

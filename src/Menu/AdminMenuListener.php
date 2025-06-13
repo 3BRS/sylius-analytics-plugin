@@ -28,7 +28,7 @@ final class AdminMenuListener implements EventSubscriberInterface
     {
         $menu = $event->getMenu();
 
-        $catalogSection = $menu->getChild('catalog'); 
+        $catalogSection = $menu->getChild('catalog');
 
         if ($catalogSection !== null) {
             $catalogSection

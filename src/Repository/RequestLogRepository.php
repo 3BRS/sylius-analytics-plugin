@@ -22,9 +22,9 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
             ->setMaxResults($limit)
             ->setParameter('startDate', new \DateTimeImmutable('-7 days'));
 
+        /** @var array<int, array{routeName: string, visitCount: int}> $result */
         $result = $qb->getQuery()->getArrayResult();
 
-        /** @var array<int, array{routeName: string, visitCount: int}> $result */
         return $result;
     }
 

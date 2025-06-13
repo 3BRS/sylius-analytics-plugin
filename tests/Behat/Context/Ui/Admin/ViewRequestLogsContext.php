@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Shop;
+namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
-use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use Webmozart\Assert\Assert;
 
-final class VisitLoggingContext implements Context
+final class ViewRequestLogsContext implements Context
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
         private Session $session,
         private RouterInterface $router,
     ) {
@@ -56,26 +53,35 @@ final class VisitLoggingContext implements Context
     }
 
     /**
-     * @Then this request should be logged
-     */
-    public function thisRequestShouldBeLogged(): void
-    {
-        $logs = $this->entityManager
-            ->getRepository(RequestLog::class)
-            ->findAll();
-
-        Assert::greaterThan(
-            count($logs),
-            0,
-            'No requests were logged.',
-        );
-    }
-
-    /**
      * @Given the store has a category :arg1
      */
     public function theStoreHasACategory($arg1): void
     {
         // Assume Sylius fixtures already create the category.
+    }
+
+    /**
+     * @When I go to the request logs page
+     */
+    public function iGoToTheRequestLogsPage(): void
+    {
+        $this->session->visit('/admin/statistics-plugin-request-logs');
+    }
+
+    /**
+     * @Then I should see visit logs for all pages
+     */
+    public function iShouldSeeVisitLogsForAllPages(): void
+    {
+        $page = $this->session->getPage();
+        $rows = $page->findAll('css', 'table tbody tr');
+
+        file_put_contents('/tmp/admin-page.html', $page->getContent());
+
+        Assert::greaterThan(
+            count($rows),
+            0,
+            'No visit logs were found in the admin panel.',
+        );
     }
 }
