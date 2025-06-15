@@ -1,4 +1,0 @@
-doctrine_migrations:
-    migrations_paths:
-        'ThreeBRS\SyliusAnalyticsPlugin\Migrations': '%kernel.project_dir%/Migrations'
-    enable_profiler: false
