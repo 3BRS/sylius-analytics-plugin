@@ -9,7 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "sylius/sylius": "^2.0"
+        "sylius/sylius": "^2.0",
+        "symfony/runtime": "^7.3"
     },
     "require-dev": {
         "api-platform/core": "^4.1",
@@ -42,7 +43,6 @@
         "symfony/http-foundation": "^v7.2.3",
         "symfony/http-kernel": "^v6.4|^v7.1",
         "symfony/intl": "^v6.4|^v7.1",
-        "symfony/runtime": "^7.3",
         "symfony/web-profiler-bundle": "^v6.4|^v7.1",
         "symplify/easy-coding-standard": "^12.0"
     },
