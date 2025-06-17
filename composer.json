@@ -9,8 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "sylius/sylius": "^2.0",
-        "symfony/runtime": "^7.3"
+        "sylius/sylius": "^2.0"
     },
     "require-dev": {
         "api-platform/core": "^4.1",

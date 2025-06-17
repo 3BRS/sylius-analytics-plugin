@@ -54,7 +54,7 @@ jobs:
             # COMPOSER PREFER LOWEST (oldest possible) #
             # has to delete vendor for next test with different libraries version to avoid Composer error 'Failed to extract...' if vendor dir cache does not exist
             - run: rm -fr composer.lock
-            - run: composer update --no-interaction --prefer-lowest --no-plugins
+            - run: composer update --no-interaction --prefer-lowest
             - run: yarn --cwd tests/Application install
             - run: yarn --cwd tests/Application build
             - run: (cd tests/Application && bin/console doctrine:database:create --if-not-exists --env=test -vvv)
@@ -67,7 +67,7 @@ jobs:
             - run: APP_ENV=test bin/behat.sh || grep 'console.CRITICAL' tests/Application/var/log/test.log
 
             # COMPOSER PREFER DIST #
-            - run: composer update --no-interaction --prefer-dist --no-plugins
+            - run: composer update --no-interaction --prefer-dist
             - run: yarn --cwd tests/Application install
             - run: yarn --cwd tests/Application build
             - run: (cd tests/Application && bin/console doctrine:database:create --if-not-exists --env=test -vvv)
