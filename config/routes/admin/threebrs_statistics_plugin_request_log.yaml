@@ -1,9 +1,0 @@
-#Sylius Resource routing only, defines the CRUD routes for RequestLog entity via SyliusResourceBundle
-threebrs_statistics_plugin_request_log_admin:
-    resource: |
-        alias: threebrs.statistics_plugin.request_log
-        section: admin
-        templates: "@SyliusAdmin\\shared\\crud"
-        except: ['show']
-        grid: threebrs_statistics_plugin_request_log
-    type: sylius.resource

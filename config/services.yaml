@@ -1,7 +1,10 @@
+imports:
+    - { resource: ./parameters.yaml }
+
 services:
   _defaults:
-    autowire: true
-    autoconfigure: true
+    autowire: false
+    autoconfigure: false
     public: false
 
 #"Whenever something (like a controller) asks for RequestLogRepositoryInterface, give it the service with ID threebrs.repository.statistics_plugin.request_log."
@@ -9,11 +12,20 @@ services:
 
 
   # Messenger handler
-  ThreeBRS\SyliusAnalyticsPlugin\MessageHandler\LogVisitMessageHandler: ~
-
+  ThreeBRS\SyliusAnalyticsPlugin\MessageHandler\LogVisitMessageHandler:
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+      $channelRepository: '@sylius.repository.channel'
+      $customerRepository: '@sylius.repository.customer'
+      $clock: '@clock'
+    tags:
+      - { name: 'messenger.message_handler' }
   # Event subscriber
   ThreeBRS\SyliusAnalyticsPlugin\EventListener\RequestLoggerSubscriber:
     arguments:
+        $bus: '@messenger.default_bus'
+        $channelContext: '@sylius.context.channel'
+        $customerContext: '@sylius.context.customer'
         $adminPath: '%sylius_admin.path_name%'
     tags:
       - { name: kernel.event_subscriber }
@@ -27,14 +39,19 @@ services:
 
 
   ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\RequestStatsController:
-    autowire: true
-    autoconfigure: true
-    public: true
-    tags: ['controller.service_arguments']
+      arguments:
+          $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+          $twig: '@twig'
+          $requestLogDays: '%threebrs_analytics_plugin.request_log_days%' 
 
-  ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\ProductRequestStatsController:
-    autowire: true
-    autoconfigure: true
-    public: true
+      tags:
+          - { name: controller.service_arguments }
+
+  ThreeBRS\SyliusAnalyticsPlugin\Twig\ProductsRequestStatsExtension:
+      arguments:
+          $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+          $productRepository: '@sylius.repository.product'
+      tags:
+          - { name: twig.extension }
   
  

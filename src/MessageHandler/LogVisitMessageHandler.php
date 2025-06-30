@@ -10,12 +10,10 @@ use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Symfony\Component\Clock\ClockInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
-#[AsMessageHandler]
-final class LogVisitMessageHandler
+class LogVisitMessageHandler
 {
     /**
      * @param ChannelRepositoryInterface<ChannelInterface> $channelRepository
@@ -31,10 +29,6 @@ final class LogVisitMessageHandler
 
     public function __invoke(LogVisitMessage $message): void
     {
-        if ($message->channel === null) {
-            throw new \InvalidArgumentException('Channel code cannot be null.');
-        }
-
         $channel = $this->channelRepository->findOneByCode($message->channel);
 
         if ($channel === null) {

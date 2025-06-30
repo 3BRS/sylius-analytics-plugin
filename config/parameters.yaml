@@ -1,0 +1,2 @@
+parameters:
+    threebrs_analytics_plugin.request_log_days: 7

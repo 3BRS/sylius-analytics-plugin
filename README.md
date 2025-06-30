@@ -40,13 +40,9 @@ Sylius Analytics Plugin
 3. Import the plugin's routing files in `config/routes.yaml`:
 
     ```yaml
-    threebrs_sylius_analytics_plugin_admin:
-        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/admin_routing.yaml"
-        prefix: /admin
-
-    threebrs_sylius_analytics_plugin_request_log:
-        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin/threebrs_statistics_plugin_request_log.yaml"
-        prefix: /admin
+    threebrs_statistics_plugin_admin_routing_file:
+        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin_routing.yaml"
+        prefix: '%sylius_admin.path_name%'
     ```
 4. Define MESSENGER parameters in .env file 
     
@@ -54,12 +50,36 @@ Sylius Analytics Plugin
     MESSENGER_TRANSPORT_DSN=doctrine://default  
 
     ```
-5. Background worker running required using
+5. To control how many past days are considered when calculating the "Most Requested Pages" in the admin dashboard, define the following parameter in your project config (Default: 7 days):
+
+    ```
+    # config/packages/_sylius.yaml (or your custom environment config)
+
+    parameters:
+        threebrs_analytics_plugin.request_log_days: 7 # Adjust this number as needed
+    ```
+6. Background worker running required for async logging using
 
     ```bash
     bin/console messenger:consume async -vv
     ```
+7. Create and run doctrine database migrations
 
+    ```bash
+    bin/console doctrine:migrations:diff
+    bin/console doctrine:migrations:migrate
+    ```
+    
+> ⚠️ **Note:**  
+> It is recommended to enable UTF-8 support in your Symfony routing configuration to ensure proper handling of non-ASCII characters in URLs (e.g., slugs with diacritics).
+>
+> Add the following to your `config/packages/routing.yaml`:
+>
+> ```yaml
+> framework:
+>     router:
+>         utf8: true
+> ```
 
 ## Usage
 
@@ -75,6 +95,7 @@ You can view the statistics inside the admin panel under the Analytics section.
 All logs are processed asynchronously using Symfony Messenger.
 
 ## Development
+
 
 ### Usage
 
@@ -98,4 +119,4 @@ This library is under the MIT license.
 
 Credits
 -------
-Developed by [3BRS](https://3brs.com)<br>
+Developed by [3BRS](https://3brs.com)

@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use ThreeBRS\SyliusAnalyticsPlugin\DependencyInjection\ThreeBRSSyliusAnalyticsPluginExtension;
 
-final class ThreeBRSSyliusAnalyticsPlugin extends Bundle
+class ThreeBRSSyliusAnalyticsPlugin extends Bundle
 {
     use SyliusPluginTrait;
 

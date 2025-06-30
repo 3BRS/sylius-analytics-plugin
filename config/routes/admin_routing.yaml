@@ -1,10 +1,19 @@
 # Define your own admin routes here, then load them in tests/Application/config/routes.yaml
+threebrs_statistics_plugin_request_log_admin:
+    resource: |
+        alias: threebrs.statistics_plugin.request_log
+        section: admin
+        templates: "@SyliusAdmin\\shared\\crud"
+        except: ['show']
+        grid: threebrs_statistics_plugin_request_log
+    type: sylius.resource
+    
 threebrs_admin_dashboard_request_stats:
     path: /_widget/request-stats
     controller: ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\RequestStatsController
     methods: [GET]
 
 threebrs_admin_product_request_count:
-    path: /admin/_widget/product/{id}/request-count
+    path: /_widget/product/{id}/request-count
     controller: ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\ProductRequestStatsController
     methods: [GET]

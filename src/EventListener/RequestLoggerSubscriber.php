@@ -8,14 +8,13 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Exception\CustomerNotFoundException;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
-// 🔧 Removed unused RequestStack import
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
-final class RequestLoggerSubscriber implements EventSubscriberInterface
+class RequestLoggerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private MessageBusInterface $bus,
@@ -66,10 +65,8 @@ final class RequestLoggerSubscriber implements EventSubscriberInterface
         $routeAttr = $request->attributes->get('_route');
         $route = is_string($routeAttr) ? $routeAttr : 'unknown';
 
-        //$channel = $this->channelContext->getChannel();
-        $channelCode = $this->channelContext->getChannel()->getCode();
+        $channelCode = (string) $this->channelContext->getChannel()->getCode();
 
-        //$session = $request->getSession();
         $sessionId = $request->getSession()->getId();
 
         $this->bus->dispatch(new LogVisitMessage(

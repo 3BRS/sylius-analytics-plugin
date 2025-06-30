@@ -11,8 +11,10 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
     /**
      * @return array<int, array{routeName: string, visitCount: int}>
      */
-    public function findMostVisitedPagesLast7Days(int $limit = 10): array
+    public function findMostVisitedPages(int $days = 7, int $limit = 10): array
     {
+        $startDate = new \DateTimeImmutable(sprintf('-%d days', $days));
+
         $qb = $this->createQueryBuilder('r')
             ->select('r.routeName, COUNT(r.id) AS visitCount')
             ->where('r.createdAt >= :startDate')
@@ -20,7 +22,7 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
             ->groupBy('r.routeName')
             ->orderBy('visitCount', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('startDate', new \DateTimeImmutable('-7 days'));
+            ->setParameter('startDate', $startDate);
 
         /** @var array<int, array{routeName: string, visitCount: int}> $result */
         $result = $qb->getQuery()->getArrayResult();

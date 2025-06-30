@@ -7,26 +7,22 @@ sylius_grid:
                     class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
 
             fields:
-                #id:
-                #type: string
-                #label: ID
-
                 url:
                     type: string
-                    label: URL
+                    label: threebrs.ui.statistics_plugin.url
 
                 routeName:
                     type: string
-                    label: Route Name
+                    label: threebrs.ui.statistics_plugin.route_name
 
                 channel:
                     type: string
-                    label: Channel
+                    label: threebrs.ui.statistics_plugin.channel
                     path: channel.code
 
                 customer:
                     type: twig
-                    label: Customer
+                    label: threebrs.ui.statistics_plugin.customer
                     path: customer
                     sortable: false
                     options:
@@ -34,41 +30,41 @@ sylius_grid:
 
                 sessionId:
                     type: string
-                    label: Session ID
+                    label: threebrs.ui.statistics_plugin.session_id
 
                 ipAddress:
                     type: string
-                    label: IP Address
+                    label: threebrs.ui.statistics_plugin.ip_address
 
                 userAgent:
                     type: string
-                    label: User Agent
+                    label: threebrs.ui.statistics_plugin.user_agent
                     sortable: false
 
                 createdAt:
                     type: datetime
-                    label: Visit Time
+                    label: threebrs.ui.statistics_plugin.created_at
 
             filters:
                 channel:
                     type: string
-                    label: Channel Code
+                    label: threebrs.ui.statistics_plugin.channel
                     options:
                         fields: [channel.code]
 
                 routeName:
                     type: string
-                    label: Route Name
+                    label: threebrs.ui.statistics_plugin.route_name
 
                 createdAt:
                     type: date
-                    label: Visit Date
+                    label: threebrs.ui.statistics_plugin.created_at
 
         sylius_admin_product:
             fields:
                 requestCount:
                     type: twig
-                    label: "Requests"
+                    label: threebrs.ui.statistics_plugin.requests
                     path: id
                     sortable: true
                     options:

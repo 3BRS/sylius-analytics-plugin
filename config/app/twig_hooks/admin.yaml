@@ -1,15 +1,5 @@
 sylius_twig_hooks:
     hooks:
-        'sylius_admin.base#stylesheets':
-            custom_styles:
-                template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/layout/base/styles.html.twig'
-                priority: -100
-
-        'sylius_admin.base#javascripts':
-            custom_scripts:
-                template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/layout/base/scripts.html.twig'
-                priority: -100
-
         'sylius_admin.statistics_plugin.request_log.index.content.header.title_block':
             title:
                template: '@SyliusAdmin/shared/crud/common/content/header/title_block/title.html.twig'
@@ -20,10 +10,3 @@ sylius_twig_hooks:
             request_log:
                 template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/request_log/_hook_widget.html.twig'
                 priority: 0
-
-        #'sylius_admin.product.show.content.page_body.general':
-            #product_request_count:
-                #template: '@ThreeBRSSyliusAnalyticsPlugin/admin/shared/product/show/_request_count_hook.html.twig'
-                #   priority: 100
-
-                
