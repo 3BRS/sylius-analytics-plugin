@@ -1,5 +1,5 @@
 imports:
-    - { resource: ./parameters.yaml }
+  - { resource: ./parameters.yaml }
 
 services:
   _defaults:
@@ -7,9 +7,9 @@ services:
     autoconfigure: false
     public: false
 
-#"Whenever something (like a controller) asks for RequestLogRepositoryInterface, give it the service with ID threebrs.repository.statistics_plugin.request_log."
+  # Whenever something (like a controller) asks for RequestLogRepositoryInterface, 
+  # give it the service with ID threebrs.repository.statistics_plugin.request_log.
   ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface: '@threebrs.repository.statistics_plugin.request_log'
-
 
   # Messenger handler
   ThreeBRS\SyliusAnalyticsPlugin\MessageHandler\LogVisitMessageHandler:
@@ -20,38 +20,37 @@ services:
       $clock: '@clock'
     tags:
       - { name: 'messenger.message_handler' }
+
   # Event subscriber
   ThreeBRS\SyliusAnalyticsPlugin\EventListener\RequestLoggerSubscriber:
     arguments:
-        $bus: '@messenger.default_bus'
-        $channelContext: '@sylius.context.channel'
-        $customerContext: '@sylius.context.customer'
-        $adminPath: '%sylius_admin.path_name%'
+      $bus: '@messenger.default_bus'
+      $channelContext: '@sylius.context.channel'
+      $customerContext: '@sylius.context.customer'
+      $adminPath: '%sylius_admin.path_name%'
     tags:
       - { name: kernel.event_subscriber }
 
-  # Menu Listener subscriber
+  # Menu listener subscriber
   ThreeBRS\SyliusAnalyticsPlugin\Menu\AdminMenuListener:
-        arguments:
-            $translator: '@translator'
-        tags:
-            - { name: kernel.event_subscriber }
+    arguments:
+      $translator: '@translator'
+    tags:
+      - { name: kernel.event_subscriber }
 
-
+  # Admin controller
   ThreeBRS\SyliusAnalyticsPlugin\Controller\Admin\RequestStatsController:
-      arguments:
-          $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
-          $twig: '@twig'
-          $requestLogDays: '%threebrs_analytics_plugin.request_log_days%' 
+    arguments:
+      $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+      $twig: '@twig'
+      $requestLogDays: '%threebrs_analytics_plugin.request_log_days%'
+    tags:
+      - { name: controller.service_arguments }
 
-      tags:
-          - { name: controller.service_arguments }
-
+  # Twig extension
   ThreeBRS\SyliusAnalyticsPlugin\Twig\ProductsRequestStatsExtension:
-      arguments:
-          $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
-          $productRepository: '@sylius.repository.product'
-      tags:
-          - { name: twig.extension }
-  
- 
+    arguments:
+      $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+      $productRepository: '@sylius.repository.product'
+    tags:
+      - { name: twig.extension }

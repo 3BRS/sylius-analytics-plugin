@@ -1,7 +1,11 @@
+parameters:
+    env(THREEBRS_MESSENGER_TRANSPORT_LOG_VISIT_DSN): 'sync://'
+    threebrs_messenger_transport_log_visit_dsn: '%env(resolve:THREEBRS_MESSENGER_TRANSPORT_LOG_VISIT_DSN)%'
+
 framework:
     messenger:
         transports:
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-
+            log_visit:
+                dsn: '%threebrs_messenger_transport_log_visit_dsn%'
         routing:
-            'ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage': async
+            'ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage': log_visit

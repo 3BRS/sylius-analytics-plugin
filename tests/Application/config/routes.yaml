@@ -2,6 +2,6 @@ sylius_shop:
     resource: "routes/sylius_shop.yaml"
 
 threebrs_statistics_plugin_admin_routing_file:
-    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin_routing.yaml"
+    resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes.yaml"
     prefix: '%sylius_admin.path_name%'
 
