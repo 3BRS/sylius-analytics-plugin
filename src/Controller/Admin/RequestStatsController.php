@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepository;
 use Twig\Environment;
 
-final class RequestStatsController
+class RequestStatsController
 {
     public function __construct(
         private RequestLogRepository $requestLogRepository,
