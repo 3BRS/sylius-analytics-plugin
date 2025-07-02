@@ -44,12 +44,35 @@ Sylius Analytics Plugin
         resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin_routing.yaml"
         prefix: '%sylius_admin.path_name%'
     ```
-4. Define MESSENGER parameters in .env file 
-    
-    ```
-    MESSENGER_TRANSPORT_DSN=doctrine://default  
+4. Messenger Configuration
 
+    Default Behavior (Synchronous in Dev/Test)
+
+    By default, the plugin uses a **synchronous transport** for `LogVisitMessage` in development and testing environments. This makes it easy to test and develop without running background workers.
+
+    To enable sync mode, make sure the following is set in your `.env` or `.env.test`:
+
+    ```dotenv
+    THREEBRS_MESSENGER_TRANSPORT_LOG_VISIT_DSN=sync://
     ```
+
+    To enable asynchronous logging in production or staging environments, configure the transport to use Doctrine:
+
+    ```dotenv
+    THREEBRS_MESSENGER_TRANSPORT_LOG_VISIT_DSN=doctrine://default
+    ```
+
+    This offloads request logging to a message queue, improving frontend performance.
+    Then, make sure to run the Messenger worker:
+
+    ```dotenv
+    bin/console messenger:consume log_visit
+    ```
+
+
+
+
+
 5. To control how many past days are considered when calculating the "Most Requested Pages" in the admin dashboard, define the following parameter in your project config (Default: 7 days):
 
     ```
