@@ -40,8 +40,8 @@ Sylius Analytics Plugin
 3. Import the plugin's routing files in `config/routes.yaml`:
 
     ```yaml
-    threebrs_statistics_plugin_admin_routing_file:
-        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes/admin_routing.yaml"
+    threebrs_statistics_plugin_routing_file:
+        resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes.yaml"
         prefix: '%sylius_admin.path_name%'
     ```
 4. Messenger Configuration
