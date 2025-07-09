@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: ThreeBRS\SyliusAnalyticsPlugin
+        psr4_prefix: ThreeBRS\SyliusAnalyticsPlugin

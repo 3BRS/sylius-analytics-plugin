@@ -1,0 +1,5 @@
+imports:
+  - { resource: "@ThreeBRSSyliusAnalyticsPlugin/config/app/twig_hooks/**/*.yaml" }
+  - { resource: "@ThreeBRSSyliusAnalyticsPlugin/config/packages/sylius_resource.yaml" }
+  - { resource: "@ThreeBRSSyliusAnalyticsPlugin/config/packages/sylius_grid.yaml" }
+  - { resource: "@ThreeBRSSyliusAnalyticsPlugin/config/packages/messenger.yaml" }

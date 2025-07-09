@@ -1,0 +1,71 @@
+sylius_grid:
+    grids:
+        threebrs_statistics_plugin_request_log:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog
+
+            fields:
+                url:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.url
+
+                routeName:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.route_name
+
+                channel:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.channel
+                    path: channel.code
+
+                customer:
+                    type: twig
+                    label: threebrs.ui.statistics_plugin.customer
+                    path: customer
+                    sortable: false
+                    options:
+                        template: "@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/customer_email.html.twig"
+
+                sessionId:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.session_id
+
+                ipAddress:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.ip_address
+
+                userAgent:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.user_agent
+                    sortable: false
+
+                createdAt:
+                    type: datetime
+                    label: threebrs.ui.statistics_plugin.created_at
+
+            filters:
+                channel:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.channel
+                    options:
+                        fields: [channel.code]
+
+                routeName:
+                    type: string
+                    label: threebrs.ui.statistics_plugin.route_name
+
+                createdAt:
+                    type: date
+                    label: threebrs.ui.statistics_plugin.created_at
+
+        sylius_admin_product:
+            fields:
+                requestCount:
+                    type: twig
+                    label: threebrs.ui.statistics_plugin.requests
+                    path: id
+                    sortable: true
+                    options:
+                        template: "@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/request_count.html.twig"

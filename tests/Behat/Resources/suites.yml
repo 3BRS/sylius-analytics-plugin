@@ -1,0 +1,3 @@
+imports:
+    - suites/view_logged_requests.yaml
+    - suites/visit_logging.yaml

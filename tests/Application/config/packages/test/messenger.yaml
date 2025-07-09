@@ -1,0 +1,7 @@
+framework:
+    messenger:
+        transports:
+            log_visit:
+                dsn: '%env(resolve:THREEBRS_MESSENGER_TRANSPORT_LOG_VISIT_DSN)%'
+        routing:
+            'ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage': log_visit

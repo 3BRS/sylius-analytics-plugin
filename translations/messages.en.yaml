@@ -1,0 +1,21 @@
+threebrs:
+    ui:
+        statistics_plugin:
+            request_logs: Request Logs
+            pageTitle: Request Logs
+            most_requested_pages: Most Requested Pages
+            route_name: Route Name
+            requests: Requests
+            no_data: No data available.
+            product_request_count: Product page requests
+            anonymous: Anonymous
+            most_requested_pages_with_days: "Most requested pages in the last %days% days"
+
+
+            url: URL
+            channel: Channel
+            customer: Customer
+            session_id: Session ID
+            ip_address: IP Address
+            user_agent: User Agent
+            created_at: Visit Time
