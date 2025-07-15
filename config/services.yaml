@@ -57,7 +57,7 @@ services:
 
   # Console command to remove old request logs
   ThreeBRS\SyliusAnalyticsPlugin\Command\RemoveOldRequestLogsCommand:
-      arguments:
-          $entityManager: '@doctrine.orm.entity_manager'
-      tags: ['console.command']
+    arguments:
+      $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+    tags: ['console.command']
 

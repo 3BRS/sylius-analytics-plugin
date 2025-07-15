@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace ThreeBRS\SyliusAnalyticsPlugin\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface;
 
 #[AsCommand(
     name: 'sylius-analytics:remove-old',
     description: 'Removes analytics request logs older than a given number of days (default: 90).',
 )]
-final class RemoveOldRequestLogsCommand extends Command
+class RemoveOldRequestLogsCommand extends Command
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly RequestLogRepositoryInterface $requestLogRepository,
+    ) {
         parent::__construct();
-        $this->entityManager = $entityManager;
     }
 
     protected function configure(): void
@@ -33,27 +32,31 @@ final class RemoveOldRequestLogsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $daysArg = $input->getArgument('days');
-        $days = is_numeric($daysArg) ? (int) $daysArg : 90;
+
+        if (!is_numeric($daysArg)) {
+            $io->error('The "days" argument must be a numeric value.');
+
+            return Command::FAILURE;
+        }
+
+        $days = (int) $daysArg;
 
         if ($days <= 0) {
-            $output->writeln('<error>Days must be a positive integer.</error>');
+            $io->error('The number of days must be a positive integer.');
 
             return Command::FAILURE;
         }
 
         $cutoffDate = new \DateTimeImmutable("-{$days} days");
 
-        $output->writeln(sprintf('Removing logs older than %s...', $cutoffDate->format('Y-m-d H:i:s')));
+        $io->section(sprintf('Removing logs older than %s...', $cutoffDate->format('Y-m-d H:i:s')));
 
-        $query = $this->entityManager->createQuery(
-            'DELETE FROM ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog rl WHERE rl.createdAt < :cutoff',
-        )->setParameter('cutoff', $cutoffDate);
+        $deletedCount = $this->requestLogRepository->removeOlderThan($cutoffDate);
 
-        $result = $query->execute();
-        $deletedCount = is_int($result) ? $result : 0;
-
-        $output->writeln(sprintf('<info>%d request log(s) deleted.</info>', $deletedCount));
+        $io->success(sprintf('%d request log(s) deleted.', $deletedCount));
 
         return Command::SUCCESS;
     }

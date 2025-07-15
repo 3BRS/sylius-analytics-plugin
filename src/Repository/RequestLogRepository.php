@@ -41,4 +41,14 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function removeOlderThan(\DateTimeInterface $cutoff): int
+    {
+        $result = $this->getEntityManager()
+            ->createQuery('DELETE FROM ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog rl WHERE rl.createdAt < :cutoff')
+            ->setParameter('cutoff', $cutoff)
+            ->execute();
+
+        return is_int($result) ? $result : 0;
+    }
 }
