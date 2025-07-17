@@ -56,6 +56,7 @@
         "doctrine/collections": "<1.7.0",
         "doctrine/data-fixtures": "<1.5.1",
         "doctrine/dbal": "<2.13.3",
+        "doctrine/orm": ">=3.4.0",
         "doctrine/doctrine-bundle": "<2.8.0",
         "friendsofsymfony/rest-bundle": "<3.1.0",
         "jms/serializer-bundle": "<4.2.0",
