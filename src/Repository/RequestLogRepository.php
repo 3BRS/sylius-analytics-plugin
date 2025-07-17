@@ -41,4 +41,16 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function removeOlderThan(\DateTimeInterface $cutoff): int
+    {
+        $result = $this->createQueryBuilder('r')
+            ->delete()
+            ->where('r.createdAt < :cutoff')
+            ->setParameter('cutoff', $cutoff)
+            ->getQuery()
+            ->execute();
+
+        return is_int($result) ? $result : 0;
+    }
 }

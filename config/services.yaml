@@ -54,3 +54,10 @@ services:
       $productRepository: '@sylius.repository.product'
     tags:
       - { name: twig.extension }
+
+  # Console command to remove old request logs
+  ThreeBRS\SyliusAnalyticsPlugin\Command\RemoveOldRequestLogsCommand:
+    arguments:
+      $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
+    tags: ['console.command']
+
