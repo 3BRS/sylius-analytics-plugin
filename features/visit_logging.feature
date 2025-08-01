@@ -4,7 +4,7 @@ Feature: Visit Logging
   Background:
     Given the store operates on a single channel in "United States"
     And the store has a product "Awesome T-Shirt"
-    And the store has a category "T-Shirts"
+    And the store classifies its products as "T-Shirts"
 
 
   Scenario: User visits homepage
@@ -15,8 +15,8 @@ Feature: Visit Logging
     When I visit the product "Awesome T-Shirt" page
     Then this request should be logged
 
-  Scenario: User visits category page
-    When I visit the "T-Shirts" category page
+  Scenario: User visits taxon page
+    When I visit the "T-Shirts" taxon page
     Then this request should be logged
 
   Scenario: User visits the cart page

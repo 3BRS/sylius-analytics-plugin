@@ -1,0 +1,14 @@
+default:
+    suites:
+        console_command:
+            contexts:
+                - tests.threebrs.sylius_analytics_plugin.context.cli.console_command
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.customer
+                - sylius.behat.context.setup.taxonomy
+                - sylius.behat.context.setup.admin_user
+            filters:
+                tags: "@console_command"

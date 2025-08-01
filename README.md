@@ -36,15 +36,28 @@ Sylius Analytics Plugin
 ## Installation
 
 1. Run `composer require 3brs/sylius-analytics-plugin`.
-2. Register `ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],` in your `config/bundles.php`.
-3. Import the plugin's routing files in `config/routes.yaml`:
+
+2. Register plugin in your `config/bundles.php`
+   ```php
+   ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],`
+   ```
+
+3. Import configuration to `config/packages/threebrs_sylius_analytics_plugin.yaml`:
+
+    ```yaml
+    imports:
+        - { resource: "@ThreeBRSSyliusAnalyticsPlugin/config/config.yaml" }
+    ```
+
+4. Import routing to `config/routes.yaml`:
 
     ```yaml
     threebrs_statistics_plugin_routing_file:
         resource: "@ThreeBRSSyliusAnalyticsPlugin/config/routes.yaml"
         prefix: '%sylius_admin.path_name%'
     ```
-4. ### Messenger Transport Configuration
+
+5. ### Messenger Transport Configuration
 
     This plugin uses **Symfony Messenger** to log requests.
 
@@ -71,21 +84,21 @@ Sylius Analytics Plugin
     ```
     * Only use this mode if your project supports background workers and a transport like Doctrine, Redis, etc.
 
-5. Configure how many past days are considered when calculating the **“Most Visited Pages”** in the admin dashboard by setting the following parameter:
+6. Configure how many past days are considered when calculating the **"Most Visited Pages"** in the admin dashboard by setting the following parameter:
 
     ```yaml
     parameters:
         threebrs_analytics_plugin.request_log_days: 7 # Change as needed
     ```
 
-6. Generate and run Doctrine migrations:
+7. Generate and run Doctrine migrations:
 
     ```bash
     bin/console doctrine:migrations:diff 
     bin/console doctrine:migrations:migrate
     ```
 
-7. Optional: Enable UTF-8 support in routing for better slug handling (diacritics, etc.):
+8. Optional: Enable UTF-8 support in routing for better slug handling (diacritics, etc.):
 
     ```yaml
     # config/packages/routing.yaml
@@ -109,6 +122,15 @@ Log processing is handled via Symfony Messenger, either synchronously (by defaul
 
 ## Development
 
+### Setup
+
+Initialize the development environment:
+
+```bash
+make init
+```
+
+This command installs dependencies, sets up the database, and prepares frontend assets (or follow related steps in Makefile).
 
 ### Usage
 
@@ -117,13 +139,47 @@ Log processing is handled via Symfony Messenger, either synchronously (by defaul
 
 ### Testing
 
-After making changes, make sure tests and checks pass:
+Run all tests and quality checks:
 
 ```bash
-composer install
-bin/phpstan.sh
-bin/ecs.sh
+make ci
 ```
+
+Run individual checks:
+
+```bash
+make phpstan    # Static analysis
+make ecs        # Code style check
+make fix        # Fix code style issues
+make lint       # Symfony and Doctrine linting
+make behat      # Behavioral tests
+```
+
+### Database Management
+
+```bash
+make backend        # Set up database with migrations
+make fixtures       # Load test fixtures
+make recreate_db    # Recreate database from scratch
+```
+
+### Development Server
+
+Start the development environment:
+
+```bash
+make run           # Start Docker containers
+make bash          # Access PHP container shell
+```
+
+### Other Useful Commands
+
+```bash
+make static        # Run static analysis (PHPStan + ECS + Lint)
+make cache         # Clear application cache
+```
+
+All commands use the test environment by default. See the Makefile for detailed implementation of each target.
 
 
 License

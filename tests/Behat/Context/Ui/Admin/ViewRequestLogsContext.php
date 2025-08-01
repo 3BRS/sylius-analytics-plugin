@@ -7,10 +7,13 @@ namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin;
 use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Partials\CreateSlugTrait;
 use Webmozart\Assert\Assert;
 
-final class ViewRequestLogsContext implements Context
+final readonly class ViewRequestLogsContext implements Context
 {
+    use CreateSlugTrait;
+
     public function __construct(
         private Session $session,
         private RouterInterface $router,
@@ -36,11 +39,12 @@ final class ViewRequestLogsContext implements Context
     }
 
     /**
-     * @When I visit the "T-Shirts" category page
+     * @When I visit the :taxonName taxon page
      */
-    public function iVisitCategoryPage(): void
+    public function iVisitTaxonPage(string $taxonName): void
     {
-        $this->session->visit('/en_US/taxons/t-shirts');
+        $slug = $this->createSlug($taxonName);
+        $this->session->visit("/en_US/taxons/{$slug}");
     }
 
     /**
@@ -50,14 +54,6 @@ final class ViewRequestLogsContext implements Context
     {
         $url = $this->router->generate('sylius_shop_cart_summary', ['_locale' => 'en_US']);
         $this->session->visit($url);
-    }
-
-    /**
-     * @Given the store has a category :arg1
-     */
-    public function theStoreHasACategory($arg1): void
-    {
-        // Assume Sylius fixtures already create the category.
     }
 
     /**

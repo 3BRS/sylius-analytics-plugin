@@ -1,0 +1,3 @@
+# direnv - See https://direnv.net
+
+export PATH="$(pwd)/bin-docker:$PATH"
