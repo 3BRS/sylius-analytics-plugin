@@ -8,11 +8,14 @@ use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Partials\CreateSlugTrait;
 use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use Webmozart\Assert\Assert;
 
 final class VisitLoggingContext implements Context
 {
+    use CreateSlugTrait;
+
     public function __construct(
         private EntityManagerInterface $entityManager,
         private Session $session,
@@ -39,11 +42,12 @@ final class VisitLoggingContext implements Context
     }
 
     /**
-     * @When I visit the "T-Shirts" category page
+     * @When I visit the :taxonName taxon page
      */
-    public function iVisitCategoryPage(): void
+    public function iVisitTaxonPage(string $taxonName): void
     {
-        $this->session->visit('/en_US/taxons/t-shirts');
+        $slug = $this->createSlug($taxonName);
+        $this->session->visit("/en_US/taxons/{$slug}");
     }
 
     /**
@@ -69,13 +73,5 @@ final class VisitLoggingContext implements Context
             0,
             'No requests were logged.',
         );
-    }
-
-    /**
-     * @Given the store has a category :arg1
-     */
-    public function theStoreHasACategory($arg1): void
-    {
-        // Assume Sylius fixtures already create the category.
     }
 }

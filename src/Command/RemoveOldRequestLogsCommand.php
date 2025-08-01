@@ -13,8 +13,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface;
 
 #[AsCommand(
-    name: 'sylius-analytics:remove-old',
+    name: 'threebrs:analytics:remove-old',
     description: 'Removes analytics request logs older than a given number of days (default: 90).',
+    aliases: [
+        // For backward compatibility with previous versions, deprecated
+        'sylius-analytics:remove-old',
+    ],
 )]
 class RemoveOldRequestLogsCommand extends Command
 {

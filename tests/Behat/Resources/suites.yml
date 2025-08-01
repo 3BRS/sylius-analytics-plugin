@@ -1,3 +1,9 @@
 imports:
     - suites/view_logged_requests.yaml
     - suites/visit_logging.yaml
+    - suites/admin_dashboard_statistics.yaml
+    - suites/admin_product_request_counts.yaml
+    - suites/admin_request_filtering.yaml
+    - suites/visitor_data_tracking.yaml
+    - suites/console_command.yaml
+    - suites/admin_menu_integration.yaml

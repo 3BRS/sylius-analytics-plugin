@@ -2,7 +2,9 @@
 /var/
 /node_modules/
 
-composer.lock
+/composer.lock
+/.env
+/.envrc
 
 /etc/build/*
 !/etc/build/.gitignore

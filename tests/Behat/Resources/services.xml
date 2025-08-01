@@ -19,5 +19,50 @@
             <argument type="service" id="behat.mink.default_session"/>
             <argument type="service" id="router"/>
         </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.admin.dashboard_statistics"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin\DashboardStatisticsContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+        </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.admin.product_request_counts"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin\ProductRequestCountsContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+        </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.admin.request_filtering"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin\RequestFilteringContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+        </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.shop.visitor_data_tracking"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Shop\VisitorDataTrackingContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="sylius.repository.customer"/>
+        </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.cli.console_command"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Cli\ConsoleCommandContext"
+                public="true">
+            <argument type="service" id="kernel"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="sylius.repository.channel"/>
+        </service>
+
+        <service id="tests.threebrs.sylius_analytics_plugin.context.ui.admin.menu_integration"
+                class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin\MenuIntegrationContext"
+                public="true">
+            <argument type="service" id="behat.mink.default_session"/>
+            <argument type="service" id="router"/>
+        </service>
     </services>
 </container>

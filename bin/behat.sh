@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
-
-# Get current script directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# cd to plugin root
+# project root
 cd "$(dirname "$DIR")"
+
+APP_ENV="test" php bin/console doctrine:database:drop --no-interaction --if-exists --force
+APP_ENV="test" php bin/console doctrine:database:create --no-interaction --if-not-exists
+APP_ENV="test" php bin/console doctrine:migrations:migrate --no-interaction
+APP_ENV="test" php bin/console doctrine:schema:update --complete --force --no-interaction
 
 set -x
 
-# Run Behat in plugin root using test env
 APP_ENV="test" php vendor/bin/behat "$@"
