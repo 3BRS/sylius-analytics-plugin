@@ -13,13 +13,15 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
+use ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProviderInterface;
 
-class RequestLoggerSubscriber implements EventSubscriberInterface
+readonly class RequestLoggerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private MessageBusInterface $bus,
         private ChannelContextInterface $channelContext,
         private CustomerContextInterface $customerContext,
+        private VisitorIdProviderInterface $visitorIdProvider,
         private string $adminPath,
     ) {
     }
@@ -58,8 +60,7 @@ class RequestLoggerSubscriber implements EventSubscriberInterface
                     $customerId = (string) $id;
                 }
             }
-        } catch (CustomerNotFoundException $e) {
-            $customerId = null;
+        } catch (CustomerNotFoundException) {
         }
 
         $routeAttr = $request->attributes->get('_route');
@@ -67,14 +68,12 @@ class RequestLoggerSubscriber implements EventSubscriberInterface
 
         $channelCode = (string) $this->channelContext->getChannel()->getCode();
 
-        $sessionId = $request->getSession()->getId();
-
         $this->bus->dispatch(new LogVisitMessage(
             $request->getUri(),
             $route,
             $channelCode,
             $customerId,
-            $sessionId,
+            $this->visitorIdProvider->getVisitorIdFromRequest($request),
             $request->getClientIp(),
             $request->headers->get('User-Agent'),
         ));

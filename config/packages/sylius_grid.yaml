@@ -28,9 +28,9 @@ sylius_grid:
                     options:
                         template: "@ThreeBRSSyliusAnalyticsPlugin/admin/shared/grid/customer_email.html.twig"
 
-                sessionId:
+                visitorId:
                     type: string
-                    label: threebrs.ui.statistics_plugin.session_id
+                    label: threebrs.ui.statistics_plugin.visitor_id
 
                 ipAddress:
                     type: string

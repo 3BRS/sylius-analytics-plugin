@@ -27,9 +27,9 @@ interface RequestLogInterface
 
     public function setCustomer(?CustomerInterface $customer): void;
 
-    public function getSessionId(): ?string;
+    public function getVisitorId(): ?string;
 
-    public function setSessionId(?string $sessionId): void;
+    public function setVisitorId(?string $visitorId): void;
 
     public function getIpAddress(): ?string;
 
@@ -39,7 +39,7 @@ interface RequestLogInterface
 
     public function setUserAgent(?string $userAgent): void;
 
-    public function getCreatedAt(): \DateTimeInterface;
+    public function getCreatedAt(): \DateTimeImmutable;
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): void;
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void;
 }
