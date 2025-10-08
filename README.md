@@ -29,7 +29,7 @@ Sylius Analytics Plugin
 * Built on top of Symfony Messenger for asynchronous processing
 
 <p align="center">
-  <img src="https://github.com/3BRS/sylius-analytics-plugin/blob/AK/doc/admin-dashboard-request-logs.png?raw=true" />
+  <img src="./doc/request-log-list.png" style="max-width: 90vw"/>
 </p>
 
 
@@ -158,9 +158,7 @@ make behat      # Behavioral tests
 ### Database Management
 
 ```bash
-make backend        # Set up database with migrations
 make fixtures       # Load test fixtures
-make recreate_db    # Recreate database from scratch
 ```
 
 ### Development Server
@@ -177,6 +175,7 @@ make bash          # Access PHP container shell
 ```bash
 make static        # Run static analysis (PHPStan + ECS + Lint)
 make cache         # Clear application cache
+make var           # Recreate var directory
 ```
 
 All commands use the test environment by default. See the Makefile for detailed implementation of each target.
