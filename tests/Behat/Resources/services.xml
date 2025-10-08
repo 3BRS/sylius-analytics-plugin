@@ -39,6 +39,8 @@
                 public="true">
             <argument type="service" id="behat.mink.default_session"/>
             <argument type="service" id="router"/>
+            <argument type="service" id="clock"/>
+            <argument type="service" id="sylius.behat.channel_context_setter"/>
         </service>
 
         <service id="tests.threebrs.sylius_analytics_plugin.context.ui.shop.visitor_data_tracking"

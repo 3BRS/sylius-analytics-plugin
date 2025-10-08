@@ -23,14 +23,14 @@ Feature: Admin can filter request logs
 
   @ui
   Scenario: Administrator filters requests by route name
-    Given there are requests to different routes
+    Given there are requests to different routes for "Germany" channel
     When I go to the request logs page
-    And I filter requests by route name "sylius_shop_product_show"
-    Then I should see only product page requests
+    And I filter requests by route name "sylius_shop_cart_summary"
+    Then I should see only cart summary requests
 
   @ui
   Scenario: Administrator filters requests by date
-    Given there are requests from different dates
+    Given there are requests from different dates for "Germany" channel
     When I go to the request logs page
     And I filter requests by today's date
     Then I should see only requests from today

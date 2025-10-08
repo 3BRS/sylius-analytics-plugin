@@ -12,5 +12,6 @@ default:
                 - sylius.behat.context.setup.taxonomy
                 - sylius.behat.context.setup.admin_user
                 - sylius.behat.context.ui.admin.login
+                - sylius.behat.context.transform.channel
             filters:
                 tags: "@admin_request_filtering"

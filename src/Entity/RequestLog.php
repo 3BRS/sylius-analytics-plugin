@@ -13,6 +13,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 #[ORM\Entity]
 #[ORM\Table(name: 'threebrs_request_log')]
 #[ORM\Index(columns: ['visitor_id'])]
+#[ORM\Index(columns: ['route_name'])]
+#[ORM\Index(columns: ['slug'])]
 #[ORM\Index(columns: ['ip_address'])]
 #[ORM\Index(columns: ['created_at'])]
 class RequestLog implements ResourceInterface, RequestLogInterface
@@ -24,6 +26,9 @@ class RequestLog implements ResourceInterface, RequestLogInterface
 
     #[ORM\Column(type: Types::TEXT)]
     private string $url;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $slug;
 
     #[ORM\Column(name: 'route_name', type: Types::STRING, nullable: true)]
     private ?string $routeName = null;
@@ -61,6 +66,16 @@ class RequestLog implements ResourceInterface, RequestLogInterface
     public function setUrl(string $url): void
     {
         $this->url = $url;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getRouteName(): ?string

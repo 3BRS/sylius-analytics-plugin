@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
+use ThreeBRS\SyliusAnalyticsPlugin\Service\RequestLogSlugParserInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProviderInterface;
 
 readonly class RequestLoggerSubscriber implements EventSubscriberInterface
@@ -22,6 +23,7 @@ readonly class RequestLoggerSubscriber implements EventSubscriberInterface
         private ChannelContextInterface $channelContext,
         private CustomerContextInterface $customerContext,
         private VisitorIdProviderInterface $visitorIdProvider,
+        private RequestLogSlugParserInterface $requestLogSlugParser,
         private string $adminPath,
     ) {
     }
@@ -64,18 +66,21 @@ readonly class RequestLoggerSubscriber implements EventSubscriberInterface
         }
 
         $routeAttr = $request->attributes->get('_route');
-        $route = is_string($routeAttr) ? $routeAttr : 'unknown';
+        $route = is_string($routeAttr)
+            ? $routeAttr
+            : 'unknown';
 
         $channelCode = (string) $this->channelContext->getChannel()->getCode();
 
         $this->bus->dispatch(new LogVisitMessage(
-            $request->getUri(),
-            $route,
-            $channelCode,
-            $customerId,
-            $this->visitorIdProvider->getVisitorIdFromRequest($request),
-            $request->getClientIp(),
-            $request->headers->get('User-Agent'),
+            url: $request->getUri(),
+            route: $route,
+            channel: $channelCode,
+            slug: $this->requestLogSlugParser->parseSlug($request->getUri()),
+            customer: $customerId,
+            visitorId: $this->visitorIdProvider->getVisitorIdFromRequest($request),
+            ip: $request->getClientIp(),
+            userAgent: $request->headers->get('User-Agent'),
         ));
     }
 }

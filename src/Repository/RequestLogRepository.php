@@ -15,11 +15,11 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
     {
         $startDate = new \DateTimeImmutable(sprintf('-%d days', $days));
 
-        $qb = $this->createQueryBuilder('r')
-            ->select('r.routeName, COUNT(r.id) AS visitCount')
-            ->where('r.createdAt >= :startDate')
-            ->andWhere('r.routeName IS NOT NULL')
-            ->groupBy('r.routeName')
+        $qb = $this->createQueryBuilder('requestLog')
+            ->select('requestLog.routeName, COUNT(requestLog.id) AS visitCount')
+            ->where('requestLog.createdAt >= :startDate')
+            ->andWhere('requestLog.routeName IS NOT NULL')
+            ->groupBy('requestLog.routeName')
             ->orderBy('visitCount', 'DESC')
             ->setMaxResults($limit)
             ->setParameter('startDate', $startDate);
@@ -32,21 +32,21 @@ class RequestLogRepository extends EntityRepository implements RequestLogReposit
 
     public function countShopProductRequests(string $productSlug): int
     {
-        return (int) $this->createQueryBuilder('r')
-            ->select('COUNT(r.id)')
-            ->where('r.routeName = :route')
-            ->andWhere('r.url LIKE :slug')
+        return (int) $this->createQueryBuilder('requestLog')
+            ->select('COUNT(requestLog.id)')
+            ->where('requestLog.routeName = :route')
+            ->andWhere('requestLog.slug = :slug')
             ->setParameter('route', 'sylius_shop_product_show')
-            ->setParameter('slug', '%/' . $productSlug)
+            ->setParameter('slug', mb_strtolower(trim($productSlug)))
             ->getQuery()
             ->getSingleScalarResult();
     }
 
     public function removeOlderThan(\DateTimeInterface $cutoff): int
     {
-        $result = $this->createQueryBuilder('r')
+        $result = $this->createQueryBuilder('requestLog')
             ->delete()
-            ->where('r.createdAt < :cutoff')
+            ->where('requestLog.createdAt < :cutoff')
             ->setParameter('cutoff', $cutoff)
             ->getQuery()
             ->execute();

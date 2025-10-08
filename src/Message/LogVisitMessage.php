@@ -10,6 +10,7 @@ class LogVisitMessage
         public string $url,
         public string $route,
         public string $channel,
+        public ?string $slug,
         public ?string $customer,
         public ?string $visitorId,
         public ?string $ip,

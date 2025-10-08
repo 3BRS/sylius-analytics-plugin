@@ -49,6 +49,7 @@ final readonly class ProductRequestCountsContext implements Context
     {
         $url = $this->router->generate('sylius_admin_product_index');
         $this->session->visit($url);
+        Assert::same(200, $this->session->getStatusCode());
     }
 
     /**
@@ -58,6 +59,8 @@ final readonly class ProductRequestCountsContext implements Context
         string $productName,
         int $count,
     ): void {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
         $content = $page->getContent();
 
