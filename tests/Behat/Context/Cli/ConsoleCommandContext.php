@@ -36,10 +36,11 @@ final class ConsoleCommandContext implements Context
         Assert::notNull($channel, 'Default channel should exist for tests');
 
         $requestLog = $this->entityManager->getClassMetadata(RequestLogInterface::class)->newInstance();
+        \assert($requestLog instanceof RequestLogInterface);
         $requestLog->setUrl('https://example.com/test');
         $requestLog->setRouteName('sylius_shop_homepage');
         $requestLog->setChannel($channel);
-        $requestLog->setSessionId('test-session-' . $days);
+        $requestLog->setVisitorId('test-client-' . $days);
         $requestLog->setIpAddress('127.0.0.1');
         $requestLog->setUserAgent('Test User Agent');
 
@@ -101,10 +102,10 @@ final class ConsoleCommandContext implements Context
 
         $repository = $this->entityManager->getRepository(RequestLogInterface::class);
         $oldLogs = $repository->createQueryBuilder('r')
-            ->where('r.createdAt < :cutoff')
-            ->setParameter('cutoff', $cutoffDate)
-            ->getQuery()
-            ->getResult();
+                                 ->where('r.createdAt < :cutoff')
+                                 ->setParameter('cutoff', $cutoffDate)
+                                 ->getQuery()
+                                 ->getResult();
 
         Assert::isEmpty($oldLogs, 'Old logs should have been removed');
     }
@@ -119,10 +120,10 @@ final class ConsoleCommandContext implements Context
 
         $repository = $this->entityManager->getRepository(RequestLogInterface::class);
         $recentLogs = $repository->createQueryBuilder('r')
-            ->where('r.createdAt >= :cutoff')
-            ->setParameter('cutoff', $cutoffDate)
-            ->getQuery()
-            ->getResult();
+                                 ->where('r.createdAt >= :cutoff')
+                                 ->setParameter('cutoff', $cutoffDate)
+                                 ->getQuery()
+                                 ->getResult();
 
         Assert::notEmpty($recentLogs, 'Recent logs should be preserved');
     }
@@ -137,10 +138,10 @@ final class ConsoleCommandContext implements Context
 
         $repository = $this->entityManager->getRepository(RequestLogInterface::class);
         $recentLogs = $repository->createQueryBuilder('r')
-            ->where('r.createdAt >= :cutoff')
-            ->setParameter('cutoff', $cutoffDate)
-            ->getQuery()
-            ->getResult();
+                                 ->where('r.createdAt >= :cutoff')
+                                 ->setParameter('cutoff', $cutoffDate)
+                                 ->getQuery()
+                                 ->getResult();
 
         Assert::notEmpty($recentLogs, 'Recent logs should be preserved');
     }

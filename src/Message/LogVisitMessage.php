@@ -11,7 +11,7 @@ class LogVisitMessage
         public string $route,
         public string $channel,
         public ?string $customer,
-        public ?string $sessionId,
+        public ?string $visitorId,
         public ?string $ip,
         public ?string $userAgent,
     ) {

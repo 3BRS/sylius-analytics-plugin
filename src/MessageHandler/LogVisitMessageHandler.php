@@ -13,7 +13,7 @@ use Symfony\Component\Clock\ClockInterface;
 use ThreeBRS\SyliusAnalyticsPlugin\Entity\RequestLog;
 use ThreeBRS\SyliusAnalyticsPlugin\Message\LogVisitMessage;
 
-class LogVisitMessageHandler
+readonly class LogVisitMessageHandler
 {
     /**
      * @param ChannelRepositoryInterface<ChannelInterface> $channelRepository
@@ -44,7 +44,7 @@ class LogVisitMessageHandler
         $log->setRouteName($message->route);
         $log->setChannel($channel);
         $log->setCustomer($customer); // now safe
-        $log->setSessionId($message->sessionId);
+        $log->setVisitorId($message->visitorId);
         $log->setIpAddress($message->ip);
         $log->setUserAgent($message->userAgent);
         $log->setCreatedAt($this->clock->now());

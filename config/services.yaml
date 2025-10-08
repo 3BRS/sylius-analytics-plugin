@@ -7,7 +7,7 @@ services:
     autoconfigure: false
     public: false
 
-  # Whenever something (like a controller) asks for RequestLogRepositoryInterface, 
+  # Whenever something (like a controller) asks for RequestLogRepositoryInterface,
   # give it the service with ID threebrs.repository.statistics_plugin.request_log.
   ThreeBRS\SyliusAnalyticsPlugin\Repository\RequestLogRepositoryInterface: '@threebrs.repository.statistics_plugin.request_log'
 
@@ -27,6 +27,7 @@ services:
       $bus: '@messenger.default_bus'
       $channelContext: '@sylius.context.channel'
       $customerContext: '@sylius.context.customer'
+      $visitorIdProvider: '@ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProviderInterface'
       $adminPath: '%sylius_admin.path_name%'
     tags:
       - { name: kernel.event_subscriber }
@@ -61,3 +62,8 @@ services:
       $requestLogRepository: '@threebrs.repository.statistics_plugin.request_log'
     tags: ['console.command']
 
+
+  ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProviderInterface:
+    class: ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProvider
+    arguments:
+      $passwordHasherFactory: '@security.password_hasher_factory'

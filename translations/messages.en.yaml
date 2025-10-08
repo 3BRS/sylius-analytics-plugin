@@ -15,7 +15,7 @@ threebrs:
             url: URL
             channel: Channel
             customer: Customer
-            session_id: Session ID
+            visitor_id: Visitor ID
             ip_address: IP Address
             user_agent: User Agent
             created_at: Visit Time

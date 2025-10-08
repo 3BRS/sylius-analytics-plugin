@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ThreeBRS\SyliusAnalyticsPlugin\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Customer\Model\CustomerInterface;
@@ -11,38 +12,41 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'threebrs_request_log')]
+#[ORM\Index(columns: ['visitor_id'])]
+#[ORM\Index(columns: ['ip_address'])]
+#[ORM\Index(columns: ['created_at'])]
 class RequestLog implements ResourceInterface, RequestLogInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::BIGINT, options: ['unsigned' => true])]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: Types::TEXT)]
     private string $url;
 
-    #[ORM\Column(name: 'route_name', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'route_name', type: Types::STRING, nullable: true)]
     private ?string $routeName = null;
 
     #[ORM\ManyToOne(targetEntity: ChannelInterface::class)]
-    #[ORM\JoinColumn(name: 'channel_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(name: 'channel_id', nullable: false)]
     private ChannelInterface $channel;
 
     #[ORM\ManyToOne(targetEntity: CustomerInterface::class)]
-    #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'SET NULL', nullable: true)]
+    #[ORM\JoinColumn(name: 'customer_id', nullable: true, onDelete: 'SET NULL')]
     private ?CustomerInterface $customer = null;
 
-    #[ORM\Column(name: 'session_id', type: 'string', nullable: true)]
-    private ?string $sessionId = null;
+    #[ORM\Column(name: 'visitor_id', type: Types::STRING, nullable: true)]
+    private ?string $visitorId = null;
 
-    #[ORM\Column(name: 'ip_address', type: 'string', length: 45, nullable: true)]
+    #[ORM\Column(name: 'ip_address', type: Types::STRING, nullable: true)]
     private ?string $ipAddress = null;
 
-    #[ORM\Column(name: 'user_agent', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'user_agent', type: Types::TEXT, nullable: true)]
     private ?string $userAgent = null;
 
-    #[ORM\Column(name: 'created_at', type: 'datetime')]
-    private \DateTimeInterface $createdAt;
+    #[ORM\Column(name: 'created_at', type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {
@@ -89,14 +93,14 @@ class RequestLog implements ResourceInterface, RequestLogInterface
         $this->customer = $customer;
     }
 
-    public function getSessionId(): ?string
+    public function getVisitorId(): ?string
     {
-        return $this->sessionId;
+        return $this->visitorId;
     }
 
-    public function setSessionId(?string $sessionId): void
+    public function setVisitorId(?string $visitorId): void
     {
-        $this->sessionId = $sessionId;
+        $this->visitorId = $visitorId;
     }
 
     public function getIpAddress(): ?string
@@ -119,12 +123,12 @@ class RequestLog implements ResourceInterface, RequestLogInterface
         $this->userAgent = $userAgent;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
