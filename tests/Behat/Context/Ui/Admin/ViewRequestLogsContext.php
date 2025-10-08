@@ -62,6 +62,7 @@ final readonly class ViewRequestLogsContext implements Context
     public function iGoToTheRequestLogsPage(): void
     {
         $this->session->visit('/admin/statistics-plugin-request-logs');
+        Assert::same(200, $this->session->getStatusCode());
     }
 
     /**
@@ -69,15 +70,19 @@ final readonly class ViewRequestLogsContext implements Context
      */
     public function iShouldSeeVisitLogsForAllPages(): void
     {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
-        $rows = $page->findAll('css', 'table tbody tr');
+        $tbody = $page->find('css', 'tbody[data-test-grid-table-body]');
 
-        file_put_contents('/tmp/admin-page.html', $page->getContent());
+        Assert::notNull($tbody, 'Grid table body with data-test-grid-table-body not found');
 
-        Assert::greaterThan(
+        $rows = $tbody->findAll('css', 'tr');
+
+        Assert::eq(
+            4,
             count($rows),
-            0,
-            'No visit logs were found in the admin panel.',
+            sprintf('Expected 4 visit logs (homepage, product, taxon, cart) but found %d', count($rows)),
         );
     }
 }

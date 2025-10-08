@@ -89,6 +89,8 @@ final readonly class MenuIntegrationContext implements Context
      */
     public function iShouldBeRedirectedToTheRequestLogsPage(): void
     {
+        Assert::same(200, $this->session->getStatusCode());
+
         // Check that we're on the request logs page
         $currentUrl = $this->session->getCurrentUrl();
 

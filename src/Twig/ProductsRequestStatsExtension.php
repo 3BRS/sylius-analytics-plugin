@@ -16,15 +16,15 @@ class ProductsRequestStatsExtension extends AbstractExtension
      * @param ProductRepositoryInterface<ProductInterface> $productRepository
      */
     public function __construct(
-        private RequestLogRepositoryInterface $requestLogRepository,
-        private ProductRepositoryInterface $productRepository,
+        private readonly RequestLogRepositoryInterface $requestLogRepository,
+        private readonly ProductRepositoryInterface $productRepository,
     ) {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('product_request_count', [$this, 'getRequestCount']),
+            new TwigFunction('product_request_count', $this->getRequestCount(...)),
         ];
     }
 

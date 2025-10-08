@@ -109,13 +109,17 @@ var:
 	touch tests/Application/var/log/test.log
 	touch tests/Application/var/log/dev.log
 	chmod -R 0777 tests/Application/var
-	mkdir -p tests/Application/public/media/cache && chmod -R 0777 tests/Application/public/media
+	docker compose run --rm --user root php mkdir -p tests/Application/public/media/cache
+	docker compose run --rm --user root php chmod -R 0777 tests/Application/public/media/cache
 
 fixtures: schema-reset bare-fixtures var
 
-tests: static behat
+tests: static behat phpunit
 
 ci: init-tests tests
+
+phpunit:
+	./bin-docker/php bin/phpunit
 
 say-ok:
 	@echo "✅ OK ✅"

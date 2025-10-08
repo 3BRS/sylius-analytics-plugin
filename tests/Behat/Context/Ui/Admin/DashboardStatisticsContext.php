@@ -61,6 +61,7 @@ final readonly class DashboardStatisticsContext implements Context
     {
         $url = $this->router->generate('sylius_admin_dashboard');
         $this->session->visit($url);
+        Assert::same(200, $this->session->getStatusCode());
     }
 
     /**
@@ -68,6 +69,8 @@ final readonly class DashboardStatisticsContext implements Context
      */
     public function iShouldSeeTheMostRequestedPagesWidget(): void
     {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
         Assert::contains($page->getContent(), 'Most requested pages in the last');
     }
@@ -79,6 +82,8 @@ final readonly class DashboardStatisticsContext implements Context
         string $productName,
         string $otherProductName,
     ): void {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
         $content = $page->getContent();
 
@@ -109,6 +114,8 @@ final readonly class DashboardStatisticsContext implements Context
      */
     public function iShouldSeeStatisticsForTheConfiguredNumberOfDays(): void
     {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
         $content = $page->getContent();
 
@@ -121,6 +128,8 @@ final readonly class DashboardStatisticsContext implements Context
      */
     public function theWidgetShouldShowTheRequestLogDaysParameter(): void
     {
+        Assert::same(200, $this->session->getStatusCode());
+
         $page = $this->session->getPage();
         $content = $page->getContent();
 

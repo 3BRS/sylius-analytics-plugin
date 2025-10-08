@@ -36,11 +36,12 @@ readonly class LogVisitMessageHandler
         }
 
         $customer = $message->customer !== null
-                    ? $this->customerRepository->find($message->customer)
-                    : null;
+            ? $this->customerRepository->find($message->customer)
+            : null;
 
         $log = new RequestLog();
         $log->setUrl($message->url);
+        $log->setSlug($message->slug);
         $log->setRouteName($message->route);
         $log->setChannel($channel);
         $log->setCustomer($customer); // now safe

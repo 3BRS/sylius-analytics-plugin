@@ -28,6 +28,7 @@ services:
       $channelContext: '@sylius.context.channel'
       $customerContext: '@sylius.context.customer'
       $visitorIdProvider: '@ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProviderInterface'
+      $requestLogSlugParser: '@ThreeBRS\SyliusAnalyticsPlugin\Service\RequestLogSlugParserInterface'
       $adminPath: '%sylius_admin.path_name%'
     tags:
       - { name: kernel.event_subscriber }
@@ -67,3 +68,6 @@ services:
     class: ThreeBRS\SyliusAnalyticsPlugin\Service\VisitorIdProvider
     arguments:
       $passwordHasherFactory: '@security.password_hasher_factory'
+
+  ThreeBRS\SyliusAnalyticsPlugin\Service\RequestLogSlugParserInterface:
+    class: ThreeBRS\SyliusAnalyticsPlugin\Service\RequestLogSlugParser
