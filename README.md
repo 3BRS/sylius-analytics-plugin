@@ -39,7 +39,7 @@ Sylius Analytics Plugin
 
 2. Register plugin in your `config/bundles.php`
    ```php
-   ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],`
+   ThreeBRS\SyliusAnalyticsPlugin\ThreeBRSSyliusAnalyticsPlugin::class => ['all' => true],
    ```
 
 3. Import configuration to `config/packages/threebrs_sylius_analytics_plugin.yaml`:
