@@ -7,12 +7,12 @@ run: init
 init:
 	which docker > /dev/null || (echo "Please install docker binary" && exit 1)
 	if command -v direnv >/dev/null; then \
-		cp --update=none .envrc.dist .envrc; \
+		[ -f .envrc ] || cp .envrc.dist .envrc; \
 		direnv allow; \
 	fi
 	docker compose up -d
 	rm -f composer.lock
-	./bin-docker/composer install --no-interaction
+	./bin-docker/composer update --no-interaction
 	rm -fr "tests/Application/var/$(APP_ENV)"
 	@make var
 	./bin-docker/php ./bin/console doctrine:database:create --no-interaction --if-not-exists
@@ -28,12 +28,12 @@ init:
 init-tests:
 	which docker > /dev/null || (echo "Please install docker binary" && exit 1)
 	if command -v direnv >/dev/null; then \
-		cp --update=none .envrc.dist .envrc; \
+		[ -f .envrc ] || cp .envrc.dist .envrc; \
 		direnv allow; \
 	fi
 	docker compose up -d
 	rm -f composer.lock
-	./bin-docker/composer install --no-interaction
+	./bin-docker/composer update --no-interaction
 	rm -fr tests/Application/var/test
 	@make var
 	./bin-docker/php ./bin/console --env=test doctrine:database:drop --no-interaction --force --if-exists
@@ -114,7 +114,7 @@ var:
 
 fixtures: schema-reset bare-fixtures var
 
-tests: static behat phpunit
+tests: static phpunit behat
 
 ci: init-tests tests
 

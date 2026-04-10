@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/srv/sylius/phpunit.xml.dist" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000601">
+    <testsuite name="AcmeSyliusExamplePlugin Test Suite" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000601">
+      <testsuite name="Tests\ThreeBRS\SyliusAnalyticsPlugin\Unit\Service\RequestLogSlugParserTest" file="/srv/sylius/tests/Unit/Service/RequestLogSlugParserTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000601">
+        <testcase name="testParseSlug" file="/srv/sylius/tests/Unit/Service/RequestLogSlugParserTest.php" line="10" class="Tests\ThreeBRS\SyliusAnalyticsPlugin\Unit\Service\RequestLogSlugParserTest" classname="Tests.ThreeBRS.SyliusAnalyticsPlugin.Unit.Service.RequestLogSlugParserTest" assertions="1" time="0.000601"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
