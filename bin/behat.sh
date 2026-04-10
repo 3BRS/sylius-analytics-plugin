@@ -9,6 +9,7 @@ cd "$(dirname "$DIR")"
 php bin/console --env=test doctrine:database:create --no-interaction --if-not-exists
 php bin/console --env=test doctrine:migrations:migrate --no-interaction
 php bin/console --env=test doctrine:schema:update --complete --force --no-interaction
+php bin/console --env=test lexik:jwt:generate-keypair --skip-if-exists --no-interaction
 
 set -x
 
