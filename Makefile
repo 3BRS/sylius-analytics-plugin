@@ -11,7 +11,6 @@ init:
 		direnv allow; \
 	fi
 	docker compose up -d
-	rm -f composer.lock
 	./bin-docker/composer update --no-interaction
 	rm -fr "tests/Application/var/$(APP_ENV)"
 	@make var
@@ -32,7 +31,6 @@ init-tests:
 		direnv allow; \
 	fi
 	docker compose up -d
-	rm -f composer.lock
 	./bin-docker/composer update --no-interaction
 	rm -fr tests/Application/var/test
 	@make var
