@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.3.0
+
+- Add support for Sylius 2.3
+- Add support for Symfony 8
+
 ### 1.2.0
 
 - Add support for Sylius 2.1 and 2.2

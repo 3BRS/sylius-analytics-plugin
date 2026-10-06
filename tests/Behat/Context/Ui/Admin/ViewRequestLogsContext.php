@@ -6,6 +6,8 @@ namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Partials\CreateSlugTrait;
 use Webmozart\Assert\Assert;
@@ -20,54 +22,42 @@ final readonly class ViewRequestLogsContext implements Context
     ) {
     }
 
-    /**
-     * @When I visit the store homepage
-     */
+    #[When('I visit the store homepage')]
     public function iVisitTheStoreHomepage(): void
     {
         $url = $this->router->generate('sylius_shop_homepage', ['_locale' => 'en_US']);
         $this->session->visit($url);
     }
 
-    /**
-     * @When I visit the product :productName page
-     */
+    #[When('I visit the product :productName page')]
     public function iVisitTheProductPage(string $productName): void
     {
         $slug = 'awesome-t-shirt'; // You can map this dynamically later
         $this->session->visit("/en_US/products/{$slug}");
     }
 
-    /**
-     * @When I visit the :taxonName taxon page
-     */
+    #[When('I visit the :taxonName taxon page')]
     public function iVisitTaxonPage(string $taxonName): void
     {
         $slug = $this->createSlug($taxonName);
         $this->session->visit("/en_US/taxons/{$slug}");
     }
 
-    /**
-     * @When I visit the cart page
-     */
+    #[When('I visit the cart page')]
     public function iVisitCartPage(): void
     {
         $url = $this->router->generate('sylius_shop_cart_summary', ['_locale' => 'en_US']);
         $this->session->visit($url);
     }
 
-    /**
-     * @When I go to the request logs page
-     */
+    #[When('I go to the request logs page')]
     public function iGoToTheRequestLogsPage(): void
     {
         $this->session->visit('/admin/statistics-plugin-request-logs');
         Assert::same(200, $this->session->getStatusCode());
     }
 
-    /**
-     * @Then I should see visit logs for all pages
-     */
+    #[Then('I should see visit logs for all pages')]
     public function iShouldSeeVisitLogsForAllPages(): void
     {
         Assert::same(200, $this->session->getStatusCode());

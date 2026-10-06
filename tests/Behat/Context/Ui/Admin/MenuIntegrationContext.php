@@ -6,6 +6,8 @@ namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Symfony\Component\Routing\RouterInterface;
 use Webmozart\Assert\Assert;
 
@@ -17,18 +19,14 @@ final readonly class MenuIntegrationContext implements Context
     ) {
     }
 
-    /**
-     * @When I go to the admin dashboard
-     */
+    #[When('I go to the admin dashboard')]
     public function iGoToTheAdminDashboard(): void
     {
         $url = $this->router->generate('sylius_admin_dashboard');
         $this->session->visit($url);
     }
 
-    /**
-     * @Then I should see :menuItem in the admin menu
-     */
+    #[Then('I should see :menuItem in the admin menu')]
     public function iShouldSeeInTheAdminMenu(string $menuItem): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -41,9 +39,7 @@ final readonly class MenuIntegrationContext implements Context
         Assert::notNull($menuLink, sprintf('Menu item "%s" not found in admin menu', $menuItem));
     }
 
-    /**
-     * @Then the request logs menu item should be accessible
-     */
+    #[Then('the request logs menu item should be accessible')]
     public function theRequestLogsMenuItemShouldBeAccessible(): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -68,9 +64,7 @@ final readonly class MenuIntegrationContext implements Context
         Assert::contains($href, 'statistics-plugin-request-logs', 'Request Logs link should point to the correct route');
     }
 
-    /**
-     * @When I click on :menuItem in the admin menu
-     */
+    #[When('I click on :menuItem in the admin menu')]
     public function iClickOnInTheAdminMenu(string $menuItem): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -84,9 +78,7 @@ final readonly class MenuIntegrationContext implements Context
         $menuLink->click();
     }
 
-    /**
-     * @Then I should be redirected to the request logs page
-     */
+    #[Then('I should be redirected to the request logs page')]
     public function iShouldBeRedirectedToTheRequestLogsPage(): void
     {
         Assert::same(200, $this->session->getStatusCode());

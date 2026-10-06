@@ -108,7 +108,7 @@ var:
 	touch tests/Application/var/log/dev.log
 	chmod -R 0777 tests/Application/var
 	docker compose run --rm --user root php mkdir -p tests/Application/public/media/cache
-	docker compose run --rm --user root php chmod -R 0777 tests/Application/public/media/cache
+	docker compose run --rm --user root php chmod -R 0777 tests/Application/public/media
 
 fixtures: schema-reset bare-fixtures var
 

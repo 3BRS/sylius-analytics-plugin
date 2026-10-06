@@ -6,6 +6,8 @@ namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
 use Behat\Mink\Session;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Partials\CreateSlugTrait;
@@ -23,36 +25,28 @@ final readonly class VisitorDataTrackingContext implements Context
     ) {
     }
 
-    /**
-     * @When an anonymous user visits the store homepage
-     */
+    #[When('an anonymous user visits the store homepage')]
     public function anAnonymousUserVisitsTheStoreHomepage(): void
     {
         $url = $this->router->generate('sylius_shop_homepage', ['_locale' => 'en_US']);
         $this->session->visit($url);
     }
 
-    /**
-     * @When I visit the store homepage
-     */
+    #[When('I visit the store homepage')]
     public function iVisitTheStoreHomepage(): void
     {
         $url = $this->router->generate('sylius_shop_homepage', ['_locale' => 'en_US']);
         $this->session->visit($url);
     }
 
-    /**
-     * @When I visit the product :productName page
-     */
+    #[When('I visit the product :productName page')]
     public function iVisitTheProductPage(string $productName): void
     {
         $url = $this->router->generate('sylius_shop_product_show', ['slug' => $this->createSlug($productName), '_locale' => 'en_US']);
         $this->session->visit($url);
     }
 
-    /**
-     * @Then the request should be logged with IP address
-     */
+    #[Then('the request should be logged with IP address')]
     public function theRequestShouldBeLoggedWithIpAddress(): void
     {
         // Check that a request log was created with IP address
@@ -61,9 +55,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::notEmpty($requestLog->getIpAddress());
     }
 
-    /**
-     * @Then the request should be logged with user agent
-     */
+    #[Then('the request should be logged with user agent')]
     public function theRequestShouldBeLoggedWithUserAgent(): void
     {
         // Check that a request log was created with user agent
@@ -72,9 +64,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::notEmpty($requestLog->getUserAgent());
     }
 
-    /**
-     * @Then the request should be logged with no customer information
-     */
+    #[Then('the request should be logged with no customer information')]
     public function theRequestShouldBeLoggedWithNoCustomerInformation(): void
     {
         // Check that a request log was created without customer
@@ -82,9 +72,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::null($requestLog->getCustomer());
     }
 
-    /**
-     * @Then the request should be logged with customer :customerEmail
-     */
+    #[Then('the request should be logged with customer :customerEmail')]
     public function theRequestShouldBeLoggedWithCustomer(string $customerEmail): void
     {
         // Check that a request log was created with the customer
@@ -93,9 +81,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::eq($requestLog->getCustomer()->getEmail(), $customerEmail);
     }
 
-    /**
-     * @Then the request should be logged with full URL containing product slug
-     */
+    #[Then('the request should be logged with full URL containing product slug')]
     public function theRequestShouldBeLoggedWithFullUrlContainingProductSlug(): void
     {
         // Check that a request log was created with full URL
@@ -104,9 +90,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::contains($requestLog->getUrl(), 't-shirt');
     }
 
-    /**
-     * @Then the request should be logged with route name :routeName
-     */
+    #[Then('the request should be logged with route name :routeName')]
     public function theRequestShouldBeLoggedWithRouteName(string $routeName): void
     {
         // Check that a request log was created with the specified route name
@@ -114,9 +98,7 @@ final readonly class VisitorDataTrackingContext implements Context
         Assert::eq($requestLog->getRouteName(), $routeName);
     }
 
-    /**
-     * @Then the request should be logged with channel information
-     */
+    #[Then('the request should be logged with channel information')]
     public function theRequestShouldBeLoggedWithChannelInformation(): void
     {
         // Check that a request log was created with channel information

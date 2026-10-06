@@ -32,6 +32,13 @@ Sylius Analytics Plugin
   <img src="./doc/request-log-list.png" style="max-width: 90vw"/>
 </p>
 
+## Requirements
+
+| Package | Version         |
+|---------|-----------------|
+| PHP     | ^8.2            |
+| Sylius  | ^2.1            |
+| Symfony | ^7.4 \|\| ^8.0  |
 
 ## Installation
 
