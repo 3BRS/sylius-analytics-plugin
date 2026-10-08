@@ -7,6 +7,9 @@ namespace Tests\ThreeBRS\SyliusAnalyticsPlugin\Behat\Context\Ui\Admin;
 use Behat\Behat\Context\Context;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Session;
+use Behat\Step\Given;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Sylius\Behat\Service\Setter\ChannelContextSetterInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\Clock\ClockInterface;
@@ -23,9 +26,7 @@ final readonly class RequestFilteringContext implements Context
     ) {
     }
 
-    /**
-     * @Given there are requests from :channel channel
-     */
+    #[Given('there are requests from :channel channel')]
     public function thereAreRequestsFromChannel(ChannelInterface $channel): void
     {
         // Set the channel context so Symfony knows which channel to use
@@ -41,9 +42,7 @@ final readonly class RequestFilteringContext implements Context
         Assert::same(200, $this->session->getStatusCode(), 'Failed to load homepage');
     }
 
-    /**
-     * @Given there are requests to different routes for :channel channel
-     */
+    #[Given('there are requests to different routes for :channel channel')]
     public function thereAreRequestsToDifferentRoutes(ChannelInterface $channel): void
     {
         // Set the channel context so Symfony knows which channel to use
@@ -62,9 +61,7 @@ final readonly class RequestFilteringContext implements Context
         Assert::same(200, $this->session->getStatusCode(), 'Failed to load cart page');
     }
 
-    /**
-     * @Given there are requests from different dates for :channel channel
-     */
+    #[Given('there are requests from different dates for :channel channel')]
     public function thereAreRequestsFromDifferentDates(ChannelInterface $channel): void
     {
         // Set the channel context so Symfony knows which channel to use
@@ -81,9 +78,7 @@ final readonly class RequestFilteringContext implements Context
         $this->session->visit($cartUrl);
     }
 
-    /**
-     * @When I go to the request logs page
-     */
+    #[When('I go to the request logs page')]
     public function iGoToTheRequestLogsPage(): void
     {
         $url = $this->router->generate('threebrs_admin_statistics_plugin.request_log_index');
@@ -91,9 +86,7 @@ final readonly class RequestFilteringContext implements Context
         Assert::same(200, $this->session->getStatusCode());
     }
 
-    /**
-     * @When I filter requests by channel :channel
-     */
+    #[When('I filter requests by channel :channel')]
     public function iFilterRequestsByChannel(ChannelInterface $channel): void
     {
         $page = $this->session->getPage();
@@ -121,9 +114,7 @@ final readonly class RequestFilteringContext implements Context
         $filterButton->submit();
     }
 
-    /**
-     * @When I filter requests by route name :routeName
-     */
+    #[When('I filter requests by route name :routeName')]
     public function iFilterRequestsByRouteName(string $routeName): void
     {
         $page = $this->session->getPage();
@@ -151,9 +142,7 @@ final readonly class RequestFilteringContext implements Context
         $filterButton->submit();
     }
 
-    /**
-     * @When I filter requests by today's date
-     */
+    #[When('I filter requests by today\'s date')]
     public function iFilterRequestsByTodaysDate(): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -196,9 +185,7 @@ final readonly class RequestFilteringContext implements Context
         $filterButton->submit();
     }
 
-    /**
-     * @Then I should see only requests from :channel channel
-     */
+    #[Then('I should see only requests from :channel channel')]
     public function iShouldSeeOnlyRequestsFromChannel(ChannelInterface $channel): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -222,9 +209,7 @@ final readonly class RequestFilteringContext implements Context
         }
     }
 
-    /**
-     * @Then I should not see requests from :channelName channel
-     */
+    #[Then('I should not see requests from :channelName channel')]
     public function iShouldNotSeeRequestsFromChannel(string $channelName): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -248,9 +233,7 @@ final readonly class RequestFilteringContext implements Context
         }
     }
 
-    /**
-     * @Then I should see only cart summary requests
-     */
+    #[Then('I should see only cart summary requests')]
     public function iShouldSeeOnlyCartSummaryPageRequests(): void
     {
         Assert::same(200, $this->session->getStatusCode());
@@ -276,9 +259,7 @@ final readonly class RequestFilteringContext implements Context
         }
     }
 
-    /**
-     * @Then I should see only requests from today
-     */
+    #[Then('I should see only requests from today')]
     public function iShouldSeeOnlyRequestsFromToday(): void
     {
         Assert::same(200, $this->session->getStatusCode());
